@@ -1,0 +1,13 @@
+[gd_scene format=3 uid="uid://dxcvvcnlkmv3x"]
+
+[ext_resource type="Texture2D" uid="uid://dhc8co7pl8kov" path="res://sprites/Tiles_Museo/Piramide-Sheet.png" id="1_k4eq2"]
+
+[node name="Piramide" type="StaticBody2D" unique_id=970754396]
+collision_layer = 8
+collision_mask = 15
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1596328871]
+texture = ExtResource("1_k4eq2")
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="." unique_id=1009880440]
+polygon = PackedVector2Array(-66, 31, 0, 64, 63, 32, 63, 26, 36, -2, -35, -4, -52, 18, -59, 19)

@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://bjmhymfab4imo"]
 
 [ext_resource type="Texture2D" uid="uid://ggb43hpp3w1n" path="res://sprites/player/Idle-Sheet.png" id="1_b26j0"]
-[ext_resource type="Script" uid="uid://dh7vq80wx28pu" path="res://character_body_2d.gd" id="1_n7ghd"]
+[ext_resource type="Script" uid="uid://dh7vq80wx28pu" path="res://player.gd" id="1_n7ghd"]
 [ext_resource type="Texture2D" uid="uid://ckvhhxgnisrdn" path="res://sprites/player/caminar_abajo-Sheet.png" id="2_n7ghd"]
 [ext_resource type="Texture2D" uid="uid://cco8onyiuuciu" path="res://sprites/player/caminar_izquierda-Sheet.png" id="3_nvl01"]
 [ext_resource type="Texture2D" uid="uid://b0ltvesmlnpa6" path="res://sprites/player/caminar_izquierda_abajo-Sheet.png" id="4_ivps1"]
@@ -11,8 +11,7 @@
 [ext_resource type="Texture2D" uid="uid://btxrk53nc573q" path="res://sprites/player/caminar_derecha_arriba-Sheet.png" id="8_u1c27"]
 [ext_resource type="Texture2D" uid="uid://dynhicrlf10qc" path="res://sprites/player/caminar_arriba-Sheet.png" id="9_op7ga"]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_sh265"]
-size = Vector2(20, 28.57143)
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_n7ghd"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_q13i1"]
 atlas = ExtResource("1_b26j0")
@@ -356,18 +355,18 @@ animations = [{
 "speed": 5.0
 }]
 
-[node name="CharacterBody2D" type="CharacterBody2D" unique_id=239840599]
+[node name="Player" type="CharacterBody2D" unique_id=239840599]
 scale = Vector2(0.7, 0.7)
 collision_mask = 15
 script = ExtResource("1_n7ghd")
-velocidad_normal = 75.0
-velocidad_sigilo = 35.0
-velocidad_correr = 105.0
+velocidad_normal = 70.0
+velocidad_sigilo = 30.0
+velocidad_correr = 100.0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=741376672]
 position = Vector2(0, -1.428572)
 scale = Vector2(0.9999998, 0.9999998)
-shape = SubResource("RectangleShape2D_sh265")
+shape = SubResource("CapsuleShape2D_n7ghd")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=631197917]
 sprite_frames = SubResource("SpriteFrames_sh265")
