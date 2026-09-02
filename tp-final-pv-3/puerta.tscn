@@ -1,0 +1,22 @@
+[gd_scene format=3 uid="uid://c7bn4htu1yfxt"]
+
+[ext_resource type="Script" uid="uid://dhaidj5e62lqv" path="res://puerta.gd" id="1_vynmr"]
+[ext_resource type="Texture2D" uid="uid://b8ne7nrfcb0bb" path="res://sprites/Tiles_Museo/Tile_Adornos-Sheet.png" id="2_sgc0l"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_yyrpj"]
+size = Vector2(16, 23)
+
+[node name="Puerta" type="StaticBody2D" unique_id=1442509131]
+collision_layer = 8
+collision_mask = 3
+script = ExtResource("1_vynmr")
+region_cerrada = Rect2(0, 106, 16, 22)
+region_abierta = Rect2(32, 106, 16, 23)
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=136545188]
+texture = ExtResource("2_sgc0l")
+region_enabled = true
+region_rect = Rect2(31.743935, 106.140434, 16.350792, 22.742455)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1994263588]
+shape = SubResource("RectangleShape2D_yyrpj")

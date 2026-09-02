@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bf23kyu7mnj1o"
-path="res://.godot/imported/Tile_Museo-Sheet-Sheet.png-2db4d276cd8a9aa8cab6fbdfd2170190.ctex"
+uid="uid://01gfpoupns8u"
+path="res://.godot/imported/key-Sheet.png-3273c932e8cd79926553376afe4ff98a.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Tile_Museo-Sheet-Sheet.png"
-dest_files=["res://.godot/imported/Tile_Museo-Sheet-Sheet.png-2db4d276cd8a9aa8cab6fbdfd2170190.ctex"]
+source_file="res://sprites/key-Sheet.png"
+dest_files=["res://.godot/imported/key-Sheet.png-3273c932e8cd79926553376afe4ff98a.ctex"]
 
 [params]
 

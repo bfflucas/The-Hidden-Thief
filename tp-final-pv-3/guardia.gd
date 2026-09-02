@@ -30,10 +30,19 @@ var pos_luz_left_down := Vector2(-7, 7)
 
 var indice_objetivo: int = 0
 
+@export_category("Llave")
+@export var id_llave: String = ""
+
+@onready var icono_llave: AnimatedSprite2D = $IconoLlave
 
 func _ready():
 	indice_objetivo = 0
-	
+
+	if id_llave == "":
+		icono_llave.visible = false
+	else:
+		icono_llave.visible = true
+		icono_llave.play("girar")	
 #func _ready():
 	#objetivo_actual = punto_b
 	#
@@ -197,3 +206,14 @@ func actualizar_luz():
 		puntos.append(punto_local)
 
 	luz_linterna.polygon = puntos
+
+func quitar_llave() -> String:
+	if id_llave == "":
+		return ""
+
+	var llave_robada: String = id_llave
+
+	id_llave = ""
+	icono_llave.visible = false
+
+	return llave_robada

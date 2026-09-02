@@ -13,7 +13,6 @@ config_version=5
 config/name="TPFinal_PV3"
 run/main_scene="uid://bydw5on562gkv"
 config/features=PackedStringArray("4.6", "GL Compatibility")
-config/icon="res://icon.svg"
 
 [input]
 

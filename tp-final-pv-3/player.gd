@@ -6,9 +6,9 @@ extends CharacterBody2D
 @export var velocidad_correr: float = 230.0
 
 @onready var sprite: AnimatedSprite2D = $AnimatedSprite2D
-
+@onready var area_interaccion: Area2D = $AreaInteraccion
 var event_input_direction := Vector2.ZERO
-
+var llaves: Array[String] = []
 
 func _input(event):
 
@@ -64,7 +64,24 @@ func obtener_velocidad_actual() -> float:
 
 
 func interactuar():
-	print("Interactuar")
+
+	var cuerpos: Array[Node2D] = area_interaccion.get_overlapping_bodies()
+
+	for cuerpo in cuerpos:
+
+		# Guardia con llave
+		if cuerpo.has_method("quitar_llave"):
+
+			var llave_obtenida: String = cuerpo.quitar_llave()
+
+			if llave_obtenida != "":
+				agregar_llave(llave_obtenida)
+				return
+
+		if cuerpo.has_method("intentar_abrir"):
+			print("PUERTA DETECTADA")
+			cuerpo.intentar_abrir(self)
+			return
 
 
 func reproducir_animacion(dir):
@@ -92,3 +109,37 @@ func reproducir_animacion(dir):
 
 	elif dir.y > 0:
 		sprite.play("walk_down")
+		
+
+func agregar_llave(id_llave: String):
+	if id_llave == "":
+		return
+
+	llaves.append(id_llave)
+
+	print("Llave obtenida: ", id_llave)
+	print("Llaves actuales: ", llaves)
+
+
+func tiene_llave(id_llave: String) -> bool:
+	return id_llave in llaves
+
+
+func tiene_alguna_llave() -> bool:
+	return not llaves.is_empty()
+
+
+func consumir_llave(id_llave: String) -> bool:
+	if id_llave in llaves:
+		llaves.erase(id_llave)
+		return true
+
+	return false
+
+
+func consumir_cualquier_llave() -> bool:
+	if llaves.is_empty():
+		return false
+
+	llaves.remove_at(0)
+	return true		
