@@ -1,0 +1,17 @@
+[gd_scene format=3 uid="uid://bwnir88gw161r"]
+
+[ext_resource type="Texture2D" uid="uid://baco8p8kqnerw" path="res://sprites/Museo/temple.png" id="1_7a2ri"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_5eyw8"]
+size = Vector2(123.333336, 25.333334)
+
+[node name="Temple" type="StaticBody2D" unique_id=482297127]
+z_index = 4
+scale = Vector2(3, 3)
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1342989409]
+texture = ExtResource("1_7a2ri")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=2095647664]
+position = Vector2(0.33333206, 18.000004)
+shape = SubResource("RectangleShape2D_5eyw8")

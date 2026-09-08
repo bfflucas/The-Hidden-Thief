@@ -1,0 +1,109 @@
+[gd_scene format=3 uid="uid://sm1i3vb3f2rm"]
+
+[ext_resource type="Texture2D" uid="uid://owoyev2gufgp" path="res://sprites/Museo/Dungeon-Sheet.png" id="1_d6qbg"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_cn742"]
+atlas = ExtResource("1_d6qbg")
+region = Rect2(0, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_3aqr8"]
+atlas = ExtResource("1_d6qbg")
+region = Rect2(64, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_jee86"]
+atlas = ExtResource("1_d6qbg")
+region = Rect2(128, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1nhor"]
+atlas = ExtResource("1_d6qbg")
+region = Rect2(192, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_c7o5m"]
+atlas = ExtResource("1_d6qbg")
+region = Rect2(256, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_tk4ku"]
+atlas = ExtResource("1_d6qbg")
+region = Rect2(320, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_kweay"]
+atlas = ExtResource("1_d6qbg")
+region = Rect2(384, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_bbdwk"]
+atlas = ExtResource("1_d6qbg")
+region = Rect2(448, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_oh6r1"]
+atlas = ExtResource("1_d6qbg")
+region = Rect2(512, 0, 64, 64)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_sl15i"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_cn742")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_3aqr8")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_jee86")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_1nhor")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_c7o5m")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_tk4ku")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_kweay")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_bbdwk")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_oh6r1")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_an467"]
+size = Vector2(19, 36)
+
+[sub_resource type="Gradient" id="Gradient_sjunl"]
+colors = PackedColorArray(1, 1, 1, 1, 0.99607843, 0.99607843, 0.99607843, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_xa4vm"]
+gradient = SubResource("Gradient_sjunl")
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+fill_to = Vector2(1, 0.525641)
+
+[node name="fuegoA" type="StaticBody2D" unique_id=964120669]
+z_index = 3
+collision_layer = 8
+collision_mask = 15
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1296284882]
+position = Vector2(8, -23)
+sprite_frames = SubResource("SpriteFrames_sl15i")
+autoplay = "default"
+frame_progress = 0.59301203
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1004878688]
+z_index = 3
+position = Vector2(0.5, -9)
+shape = SubResource("RectangleShape2D_an467")
+
+[node name="PointLight2D" type="PointLight2D" parent="." unique_id=1414061462]
+position = Vector2(0, -33)
+color = Color(0.77734375, 0.5682049, 0.07287598, 1)
+energy = 0.5
+texture = SubResource("GradientTexture2D_xa4vm")
+texture_scale = 0.7

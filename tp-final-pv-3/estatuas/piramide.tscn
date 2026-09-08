@@ -1,8 +1,9 @@
 [gd_scene format=3 uid="uid://dxcvvcnlkmv3x"]
 
-[ext_resource type="Texture2D" uid="uid://dhc8co7pl8kov" path="res://sprites/Tiles_Museo/Piramide-Sheet.png" id="1_k4eq2"]
+[ext_resource type="Texture2D" uid="uid://dhc8co7pl8kov" path="res://sprites/Museo/Piramide-Sheet.png" id="1_k4eq2"]
 
 [node name="Piramide" type="StaticBody2D" unique_id=970754396]
+z_index = 4
 collision_layer = 8
 collision_mask = 15
 

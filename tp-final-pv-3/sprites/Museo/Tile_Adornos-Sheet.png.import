@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dhc8co7pl8kov"
-path="res://.godot/imported/Piramide-Sheet.png-e927b9dde7ba462594b1cfeb8a97809c.ctex"
+uid="uid://b8ne7nrfcb0bb"
+path="res://.godot/imported/Tile_Adornos-Sheet.png-4aae05361196c10e5c8d03b46373e0d4.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://sprites/Tiles_Museo/Piramide-Sheet.png"
-dest_files=["res://.godot/imported/Piramide-Sheet.png-e927b9dde7ba462594b1cfeb8a97809c.ctex"]
+source_file="res://sprites/Museo/Tile_Adornos-Sheet.png"
+dest_files=["res://.godot/imported/Tile_Adornos-Sheet.png-4aae05361196c10e5c8d03b46373e0d4.ctex"]
 
 [params]
 

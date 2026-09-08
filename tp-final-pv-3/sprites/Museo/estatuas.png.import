@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://ne280g3obkap"
-path="res://.godot/imported/monalisa-Sheet.png-609593503f2ac69c452056166ddfb66a.ctex"
+uid="uid://bfxu1rr36xxqk"
+path="res://.godot/imported/estatuas.png-e6fc3d76922053250f4d9bafca1cd1b1.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://sprites/Tiles_Museo/monalisa-Sheet.png"
-dest_files=["res://.godot/imported/monalisa-Sheet.png-609593503f2ac69c452056166ddfb66a.ctex"]
+source_file="res://sprites/Museo/estatuas.png"
+dest_files=["res://.godot/imported/estatuas.png-e6fc3d76922053250f4d9bafca1cd1b1.ctex"]
 
 [params]
 
