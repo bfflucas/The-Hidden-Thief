@@ -5,9 +5,11 @@
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_5eyw8"]
 size = Vector2(123.333336, 25.333334)
 
-[node name="Temple" type="StaticBody2D" unique_id=482297127]
+[node name="Temple" type="StaticBody2D" unique_id=482297127 groups=["navigation_polygon_source_geometry_group"]]
 z_index = 4
 scale = Vector2(3, 3)
+collision_layer = 8
+collision_mask = 15
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=1342989409]
 texture = ExtResource("1_7a2ri")

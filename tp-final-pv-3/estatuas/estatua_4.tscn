@@ -5,7 +5,7 @@
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_23da0"]
 size = Vector2(23, 27)
 
-[node name="Estatua2" type="StaticBody2D" unique_id=1135806888]
+[node name="Estatua2" type="StaticBody2D" unique_id=1135806888 groups=["navigation_polygon_source_geometry_group"]]
 z_index = 4
 collision_layer = 8
 collision_mask = 15

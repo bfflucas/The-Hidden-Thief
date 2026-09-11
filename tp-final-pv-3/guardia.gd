@@ -1,5 +1,14 @@
 extends CharacterBody2D
 
+enum Estado {
+	PATRULLA,
+	ALERTA,
+	PERSECUCION
+}
+
+var estado_actual: Estado = Estado.PATRULLA
+var posicion_sospechosa: Vector2
+
 @export_category("Movimiento")
 @export var velocidad: float = 30.0
 
@@ -7,9 +16,36 @@ extends CharacterBody2D
 @export var puntos_patrulla: Array[Marker2D] = []
 @export var distancia_llegada: float = 5.0
 
+@onready var navigation_agent: NavigationAgent2D = $NavigationAgent2D
+
+enum FaseAlerta {
+	YENDO,
+	ESPERANDO
+}
+
+var fase_alerta: FaseAlerta = FaseAlerta.YENDO
+
+@export_category("Alerta")
+@export var velocidad_alerta: float = 40.0
+@export var tiempo_alerta: float = 1.0
+@export var distancia_investigacion: float = 8.0
+
+var tiempo_alerta_actual: float = 0.0
+
+
 @onready var sprite: AnimatedSprite2D = $AnimatedSprite2D
 @onready var direccion_vision: Node2D = $DireccionVision
+@onready var icono_alerta: Sprite2D = $IconoAlerta
 
+@export_category("Deteccion")
+@export var player: CharacterBody2D
+
+@export_category("Persecucion")
+@export var velocidad_persecucion: float = 55.0
+@export var tiempo_perder_player: float = 1.5
+
+var ultima_posicion_player: Vector2
+var tiempo_sin_ver_player: float = 0.0
 
 # POSICION DEL HAZ DE LA LINTERNA
 var pos_luz_right := Vector2(0, 4)
@@ -37,29 +73,50 @@ var indice_objetivo: int = 0
 
 func _ready():
 	indice_objetivo = 0
-
+	icono_alerta.visible = false
 	if id_llave == "":
 		icono_llave.visible = false
 	else:
 		icono_llave.visible = true
-		icono_llave.play("girar")	
-#func _ready():
-	#objetivo_actual = punto_b
-	#
-	#print("pos_luz_left real: ", pos_luz_left_down)
+		icono_llave.play("girar")
 
-func _physics_process(_delta):
+func _physics_process(delta):
+
+	match estado_actual:
+
+		Estado.PATRULLA:
+			estado_patrulla(delta)
+
+		Estado.ALERTA:
+			estado_alerta(delta)
+
+		Estado.PERSECUCION:
+			estado_persecucion(delta)
+
+func estado_patrulla(_delta):
+
+	if player != null:
+		
+		if puede_ver_player():
+			ultima_posicion_player = player.global_position
+			tiempo_sin_ver_player = 0.0
+			cambiar_estado(Estado.PERSECUCION)
+			return
+		
+		var radio_ruido: float = player.obtener_radio_ruido()
+		var distancia_player: float = global_position.distance_to(player.global_position)
+
+		if radio_ruido > 0.0 and distancia_player <= radio_ruido:
+			posicion_sospechosa = player.global_position
+			cambiar_estado(Estado.ALERTA)
+			return
 
 	if puntos_patrulla.is_empty():
 		velocity = Vector2.ZERO
-		sprite.play("Idle")
+		sprite.pause()
 		return
 
 	var objetivo_actual: Marker2D = puntos_patrulla[indice_objetivo]
-
-	var direccion: Vector2 = global_position.direction_to(
-		objetivo_actual.global_position
-	)
 
 	var distancia: float = global_position.distance_to(
 		objetivo_actual.global_position
@@ -70,31 +127,139 @@ func _physics_process(_delta):
 		velocity = Vector2.ZERO
 		return
 
-	direccion = direccion.normalized()
+	mover_con_navigation(
+		objetivo_actual.global_position,
+		velocidad
+	)
 
-	# Movimiento real
-	velocity = direccion * velocidad
+func cambiar_estado(nuevo_estado: Estado):
 
-	# Dirección visual limitada a 8 direcciones
-	var direccion_visual: Vector2 = obtener_direccion_8(direccion)
+	if estado_actual == nuevo_estado:
+		return
 
-	reproducir_animacion(direccion_visual)
+	estado_actual = nuevo_estado
 
-	direccion_vision.rotation = direccion_visual.angle()
+	match estado_actual:
+
+		Estado.PATRULLA:
+			icono_alerta.visible = false
+
+		Estado.ALERTA:
+			icono_alerta.visible = true
+			fase_alerta = FaseAlerta.YENDO
+			navigation_agent.target_position = posicion_sospechosa
+
+		Estado.PERSECUCION:
+			icono_alerta.visible = true
+
+	print("Nuevo estado del guardia: ", Estado.keys()[estado_actual])
+
+func estado_alerta(delta):
+	if puede_ver_player():
+			ultima_posicion_player = player.global_position
+			tiempo_sin_ver_player = 0.0
+			cambiar_estado(Estado.PERSECUCION)
+			return
+
+	match fase_alerta:
+
+		FaseAlerta.YENDO:
+			ir_a_investigar()
+
+		FaseAlerta.ESPERANDO:
+			esperar_en_alerta(delta)
+
+func ir_a_investigar():
+
+	# Mientras investiga, sigue escuchando nuevos ruidos
+	if player != null:
+
+		var radio_ruido: float = player.obtener_radio_ruido()
+		var distancia_player: float = global_position.distance_to(player.global_position)
+
+		if radio_ruido > 0.0 and distancia_player <= radio_ruido:
+
+			posicion_sospechosa = player.global_position
+			navigation_agent.target_position = posicion_sospechosa
+
+	var distancia: float = global_position.distance_to(posicion_sospechosa)
+
+	if distancia <= distancia_investigacion:
+
+		velocity = Vector2.ZERO
+
+		fase_alerta = FaseAlerta.ESPERANDO
+
+		tiempo_alerta_actual = tiempo_alerta
+
+		sprite.pause()
+
+		return
+
+	mover_con_navigation(
+		posicion_sospechosa,
+		velocidad_alerta
+	)
+	
+func esperar_en_alerta(delta):
+
+	velocity = Vector2.ZERO
+
+	sprite.pause()
 
 	actualizar_luz()
 
-	move_and_slide()
+	# Mientras está quieto, también sigue escuchando
+	if player != null:
 
+		var radio_ruido: float = player.obtener_radio_ruido()
+		var distancia_player: float = global_position.distance_to(player.global_position)
 
-#func _physics_process(_delta):
-	#var direccion = Vector2(-1, 1)
-#
-	#reproducir_animacion(direccion)
-	#direccion_vision.rotation = direccion.angle()
-#
-	#velocity = Vector2.ZERO
+		if radio_ruido > 0.0 and distancia_player <= radio_ruido:
 
+			posicion_sospechosa = player.global_position
+
+			fase_alerta = FaseAlerta.YENDO
+
+			navigation_agent.target_position = posicion_sospechosa
+
+			return
+
+	tiempo_alerta_actual -= delta
+
+	if tiempo_alerta_actual <= 0.0:
+		cambiar_estado(Estado.PATRULLA)
+		
+		
+func estado_persecucion(delta):
+
+	if player == null:
+		return
+
+	if puede_ver_player():
+
+		ultima_posicion_player = player.global_position
+		tiempo_sin_ver_player = 0.0
+
+		mover_con_navigation(
+			player.global_position,
+			velocidad_persecucion
+		)
+
+	else:
+
+		tiempo_sin_ver_player += delta
+
+		mover_con_navigation(
+			ultima_posicion_player,
+			velocidad_persecucion
+		)
+
+		if tiempo_sin_ver_player >= tiempo_perder_player:
+
+			posicion_sospechosa = ultima_posicion_player
+
+			cambiar_estado(Estado.ALERTA)
 
 
 func cambiar_objetivo():
@@ -217,3 +382,86 @@ func quitar_llave() -> String:
 	icono_llave.visible = false
 
 	return llave_robada
+
+func mover_con_navigation(objetivo: Vector2, velocidad_movimiento: float):
+
+	navigation_agent.target_position = objetivo
+
+	var siguiente_punto: Vector2 = navigation_agent.get_next_path_position()
+
+	var distancia_siguiente_punto: float = global_position.distance_to(siguiente_punto)
+
+	# Si el siguiente punto está prácticamente encima,
+	# no intentamos corregir dirección constantemente.
+	if distancia_siguiente_punto < 2.0:
+		velocity = Vector2.ZERO
+		actualizar_luz()
+		return
+
+	var direccion: Vector2 = global_position.direction_to(siguiente_punto)
+
+	if direccion.length() > 0.0:
+
+		direccion = direccion.normalized()
+
+		velocity = direccion * velocidad_movimiento
+
+		var direccion_visual: Vector2 = obtener_direccion_8(direccion)
+
+		reproducir_animacion(direccion_visual)
+
+		direccion_vision.rotation = direccion_visual.angle()
+
+	else:
+		velocity = Vector2.ZERO
+
+	actualizar_luz()
+	move_and_slide()
+
+func puede_ver_player() -> bool:
+
+	if player == null:
+		return false
+
+	var origen: Vector2 = direccion_vision.global_position
+	var vector_player: Vector2 = player.global_position - origen
+	var distancia_player: float = vector_player.length()
+
+	# Fuera del alcance de la linterna
+	if distancia_player > distancia_luz:
+		return false
+
+	# Dirección hacia donde mira el guardia
+	var direccion_frente: Vector2 = Vector2.RIGHT.rotated(
+		direccion_vision.global_rotation
+	)
+
+	var direccion_player: Vector2 = vector_player.normalized()
+
+	var angulo_hacia_player: float = abs(
+		direccion_frente.angle_to(direccion_player)
+	)
+
+	# Fuera del cono de visión
+	if angulo_hacia_player > deg_to_rad(angulo_luz / 2.0):
+		return false
+
+	# Comprobar que no haya una pared en el medio
+	var espacio: PhysicsDirectSpaceState2D = get_world_2d().direct_space_state
+
+	var query: PhysicsRayQueryParameters2D = PhysicsRayQueryParameters2D.create(
+		origen,
+		player.global_position
+	)
+
+	query.exclude = [get_rid()]
+
+	# Debe incluir Player + paredes/obstáculos
+	query.collision_mask = collision_mask | 1
+
+	var resultado: Dictionary = espacio.intersect_ray(query)
+
+	if resultado.is_empty():
+		return false
+
+	return resultado["collider"] == player

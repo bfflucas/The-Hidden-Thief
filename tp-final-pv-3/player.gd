@@ -5,6 +5,10 @@ extends CharacterBody2D
 @export var velocidad_sigilo: float = 70.0
 @export var velocidad_correr: float = 230.0
 
+@export_category("Ruido")
+@export var radio_ruido_normal: float = 120.0
+@export var radio_ruido_correr: float = 220.0
+
 @onready var sprite: AnimatedSprite2D = $AnimatedSprite2D
 @onready var area_interaccion: Area2D = $AreaInteraccion
 var event_input_direction := Vector2.ZERO
@@ -143,3 +147,16 @@ func consumir_cualquier_llave() -> bool:
 
 	llaves.remove_at(0)
 	return true		
+
+
+func obtener_radio_ruido() -> float:
+	if velocity.length() == 0:
+		return 0.0
+
+	if Input.is_action_pressed("stealth"):
+		return 0.0
+
+	if Input.is_action_pressed("run"):
+		return radio_ruido_correr
+
+	return radio_ruido_normal

@@ -381,7 +381,6 @@ frame_progress = 0.95046556
 
 [node name="Camera2D" type="Camera2D" parent="." unique_id=1127414446]
 position = Vector2(-1, 0)
-zoom = Vector2(5, 5)
 
 [node name="AreaInteraccion" type="Area2D" parent="." unique_id=632721840]
 collision_mask = 10

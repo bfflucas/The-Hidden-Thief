@@ -10,6 +10,7 @@
 [ext_resource type="Texture2D" uid="uid://36ikcol1kvhk" path="res://sprites/guardia/caminar_derecha_arriba-Sheet.png" id="8_7stqq"]
 [ext_resource type="Texture2D" uid="uid://c0i2xvf5qtiog" path="res://sprites/guardia/caminar_arriba-Sheet.png" id="9_josew"]
 [ext_resource type="Texture2D" uid="uid://01gfpoupns8u" path="res://sprites/key-Sheet.png" id="10_3wqqh"]
+[ext_resource type="Texture2D" uid="uid://f1dpjkycdg67" path="res://sprites/guardia/alerta.png" id="11_fvdt0"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_3im4l"]
 atlas = ExtResource("2_3wqqh")
@@ -384,7 +385,7 @@ position = Vector2(0, 1)
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="DireccionVision/AreaVision" unique_id=576343628]
 
 [node name="LuzLinterna" type="Polygon2D" parent="DireccionVision" unique_id=871937829]
-z_index = -1
+z_index = 5
 z_as_relative = false
 material = SubResource("CanvasItemMaterial_3im4l")
 color = Color(0.7529412, 0.6431373, 0.13725491, 0.39215687)
@@ -398,3 +399,13 @@ scale = Vector2(0.5, 0.5)
 sprite_frames = SubResource("SpriteFrames_voua4")
 animation = &"girar"
 frame_progress = 0.07850169
+
+[node name="NavigationAgent2D" type="NavigationAgent2D" parent="." unique_id=657184524]
+path_desired_distance = 5.0
+target_desired_distance = 8.0
+path_max_distance = 20.0
+
+[node name="IconoAlerta" type="Sprite2D" parent="." unique_id=2122751162]
+position = Vector2(1.4285715, -22.857143)
+scale = Vector2(0.7, 0.7)
+texture = ExtResource("11_fvdt0")
