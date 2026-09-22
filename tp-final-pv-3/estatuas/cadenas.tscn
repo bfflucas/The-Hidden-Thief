@@ -1,0 +1,10 @@
+[gd_scene format=3 uid="uid://c4rba36343lwm"]
+
+[ext_resource type="Texture2D" uid="uid://owoyev2gufgp" path="res://sprites/Museo/Dungeon-Sheet.png" id="1_syqxx"]
+
+[node name="Sprite2D" type="Sprite2D" unique_id=696358715]
+z_index = 2
+scale = Vector2(0.4, 0.4)
+texture = ExtResource("1_syqxx")
+region_enabled = true
+region_rect = Rect2(128.79764, 192.41966, 60.087387, 63.580338)

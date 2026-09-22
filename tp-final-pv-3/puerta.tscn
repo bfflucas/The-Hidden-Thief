@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://c7bn4htu1yfxt"]
 
-[ext_resource type="Script" uid="uid://dhaidj5e62lqv" path="res://puerta.gd" id="1_vynmr"]
+[ext_resource type="Script" uid="uid://dhaidj5e62lqv" path="res://scripts/puerta.gd" id="1_vynmr"]
 [ext_resource type="Texture2D" uid="uid://b8ne7nrfcb0bb" path="res://sprites/Museo/Tile_Adornos-Sheet.png" id="2_sgc0l"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_yyrpj"]

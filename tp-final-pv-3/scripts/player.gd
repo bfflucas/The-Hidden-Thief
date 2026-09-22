@@ -39,7 +39,6 @@ func _input(event):
 	if event.is_action_pressed("interact"):
 		interactuar()
 
-
 func _physics_process(_delta):
 
 	var dir = event_input_direction
@@ -68,22 +67,25 @@ func obtener_velocidad_actual() -> float:
 
 
 func interactuar():
-
 	var cuerpos: Array[Node2D] = area_interaccion.get_overlapping_bodies()
 
 	for cuerpo in cuerpos:
 
-		# Guardia con llave
+		# Robar llave a un guardia
 		if cuerpo.has_method("quitar_llave"):
-
 			var llave_obtenida: String = cuerpo.quitar_llave()
 
 			if llave_obtenida != "":
 				agregar_llave(llave_obtenida)
 				return
 
+		# Robar tesoro
+		if cuerpo.has_method("robar"):
+			if cuerpo.robar():
+				return
+
+		# Abrir puerta
 		if cuerpo.has_method("intentar_abrir"):
-			print("PUERTA DETECTADA")
 			cuerpo.intentar_abrir(self)
 			return
 

@@ -14,6 +14,10 @@ config/name="TPFinal_PV3"
 run/main_scene="uid://bydw5on562gkv"
 config/features=PackedStringArray("4.6", "GL Compatibility")
 
+[autoload]
+
+GameManager="*uid://djyyglbocpfy3"
+
 [global_group]
 
 navigation_polygon_source_geometry_group=""
