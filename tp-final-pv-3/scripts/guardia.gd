@@ -8,6 +8,7 @@ enum Estado {
 
 var estado_actual: Estado = Estado.PATRULLA
 var posicion_sospechosa: Vector2
+var alarma_general: bool = false
 
 @export_category("Movimiento")
 @export var velocidad: float = 30.0
@@ -15,6 +16,10 @@ var posicion_sospechosa: Vector2
 @export_category("Patrulla")
 @export var puntos_patrulla: Array[Marker2D] = []
 @export var distancia_llegada: float = 5.0
+
+@export_category("Alarma General")
+@export var multiplicador_velocidad_alarma: float = 1.3
+@export var multiplicador_audicion_alarma: float = 1.5
 
 @onready var navigation_agent: NavigationAgent2D = $NavigationAgent2D
 
@@ -79,6 +84,7 @@ func _ready():
 	else:
 		icono_llave.visible = true
 		icono_llave.play("girar")
+	GameManager.alarma_activada.connect(_on_alarma_activada)
 
 func _physics_process(delta):
 
@@ -96,25 +102,35 @@ func _physics_process(delta):
 func estado_patrulla(_delta):
 
 	if player != null:
-		
+
+		# Primero comprueba si ve al jugador
 		if puede_ver_player():
 			ultima_posicion_player = player.global_position
 			tiempo_sin_ver_player = 0.0
 			cambiar_estado(Estado.PERSECUCION)
 			return
-		
+
+		# Comprueba si escucha al jugador
 		var radio_ruido: float = player.obtener_radio_ruido()
-		var distancia_player: float = global_position.distance_to(player.global_position)
+
+		if alarma_general:
+			radio_ruido *= multiplicador_audicion_alarma
+
+		var distancia_player: float = global_position.distance_to(
+			player.global_position
+		)
 
 		if radio_ruido > 0.0 and distancia_player <= radio_ruido:
 			posicion_sospechosa = player.global_position
 			cambiar_estado(Estado.ALERTA)
 			return
 
+
 	if puntos_patrulla.is_empty():
 		velocity = Vector2.ZERO
 		sprite.pause()
 		return
+
 
 	var objetivo_actual: Marker2D = puntos_patrulla[indice_objetivo]
 
@@ -128,9 +144,22 @@ func estado_patrulla(_delta):
 		return
 
 	mover_con_navigation(
-		objetivo_actual.global_position,
-		velocidad
-	)
+	objetivo_actual.global_position,
+	obtener_velocidad_alarma(velocidad)
+)
+
+func comprobar_si_atrapo_player():
+
+	if estado_actual != Estado.PERSECUCION:
+		return
+
+	for i in get_slide_collision_count():
+		var colision: KinematicCollision2D = get_slide_collision(i)
+		var objeto = colision.get_collider()
+
+		if objeto == player:
+			GameManager.perder_partida()
+			return
 
 func cambiar_estado(nuevo_estado: Estado):
 
@@ -197,9 +226,9 @@ func ir_a_investigar():
 		return
 
 	mover_con_navigation(
-		posicion_sospechosa,
-		velocidad_alerta
-	)
+	posicion_sospechosa,
+	obtener_velocidad_alarma(velocidad_alerta)
+)
 	
 func esperar_en_alerta(delta):
 
@@ -242,8 +271,8 @@ func estado_persecucion(delta):
 		tiempo_sin_ver_player = 0.0
 
 		mover_con_navigation(
-			player.global_position,
-			velocidad_persecucion
+		player.global_position,
+		obtener_velocidad_alarma(velocidad_persecucion)
 		)
 
 	else:
@@ -251,8 +280,8 @@ func estado_persecucion(delta):
 		tiempo_sin_ver_player += delta
 
 		mover_con_navigation(
-			ultima_posicion_player,
-			velocidad_persecucion
+		ultima_posicion_player,
+		obtener_velocidad_alarma(velocidad_persecucion)
 		)
 
 		if tiempo_sin_ver_player >= tiempo_perder_player:
@@ -417,6 +446,7 @@ func mover_con_navigation(objetivo: Vector2, velocidad_movimiento: float):
 
 	actualizar_luz()
 	move_and_slide()
+	comprobar_si_atrapo_player()
 
 func puede_ver_player() -> bool:
 
@@ -465,3 +495,13 @@ func puede_ver_player() -> bool:
 		return false
 
 	return resultado["collider"] == player
+
+func _on_alarma_activada():
+	alarma_general = true
+
+func obtener_velocidad_alarma(velocidad_base: float) -> float:
+
+	if alarma_general:
+		return velocidad_base * multiplicador_velocidad_alarma
+
+	return velocidad_base

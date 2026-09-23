@@ -4,12 +4,15 @@ var robado: bool = false
 
 
 func robar() -> bool:
+
 	if robado:
 		return false
 
 	robado = true
 
-	GameManager.activar_alarma()
+	print("ENTRÓ EN robar()")
+
+	GameManager.registrar_robo_tesoro()
 
 	queue_free()
 

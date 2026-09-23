@@ -1,0 +1,58 @@
+[gd_scene format=3 uid="uid://bjq4ji81kgxol"]
+
+[ext_resource type="Script" uid="uid://d6vlicrf813y" path="res://hud.gd" id="1_37p78"]
+
+[node name="HUD" type="CanvasLayer" unique_id=1147795074]
+script = ExtResource("1_37p78")
+
+[node name="TiempoLabel" type="Label" parent="." unique_id=1932393888]
+offset_right = 40.0
+offset_bottom = 23.0
+
+[node name="PantallaResultado" type="Control" parent="." unique_id=540801174]
+process_mode = 2
+visible = false
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Fondo" type="ColorRect" parent="PantallaResultado" unique_id=68245464]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.023529412, 0.011764706, 0.019607844, 0.6431373)
+
+[node name="Titulo" type="Label" parent="PantallaResultado" unique_id=1775097537]
+layout_mode = 0
+offset_left = 353.0
+offset_top = 122.0
+offset_right = 653.0
+offset_bottom = 182.0
+
+[node name="BotonPrincipal" type="Button" parent="PantallaResultado" unique_id=894844336]
+layout_mode = 0
+offset_left = 242.0
+offset_top = 472.0
+offset_right = 422.0
+offset_bottom = 522.0
+text = "REINTENTAR"
+
+[node name="BotonMenu" type="Button" parent="PantallaResultado" unique_id=67062000]
+layout_mode = 0
+offset_left = 725.0
+offset_top = 506.0
+offset_right = 905.0
+offset_bottom = 556.0
+theme_override_colors/font_color = Color(0.91796875, 0.20708084, 0.043029785, 1)
+theme_override_colors/font_pressed_color = Color(0.28701782, 0.64453125, 0.5523598, 1)
+theme_override_colors/font_hover_color = Color(0.87890625, 0.36735535, 0.36735535, 1)
+text = "MENU"
+
+[connection signal="pressed" from="PantallaResultado/BotonPrincipal" to="." method="_on_boton_principal_pressed"]
+[connection signal="pressed" from="PantallaResultado/BotonMenu" to="." method="_on_boton_menu_pressed"]

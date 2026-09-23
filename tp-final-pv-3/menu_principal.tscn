@@ -1,0 +1,56 @@
+[gd_scene format=3 uid="uid://byq873ggvs3hx"]
+
+[ext_resource type="Script" uid="uid://ca3xw1qyjnp8y" path="res://menu_principal.gd" id="1_bj1uy"]
+
+[node name="MenuPrincipal" type="Control" unique_id=455421212]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_bj1uy")
+
+[node name="Fondo" type="ColorRect" parent="." unique_id=1615034618]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.14453125, 0.13380432, 0.13380432, 1)
+
+[node name="Titulo" type="Label" parent="." unique_id=1169080622]
+layout_mode = 0
+offset_left = 425.0
+offset_top = 47.0
+offset_right = 569.0
+offset_bottom = 70.0
+text = "THE HIDDEN THIEF"
+
+[node name="BotonJugar" type="Button" parent="." unique_id=1789115172]
+layout_mode = 0
+offset_left = 473.0
+offset_top = 224.0
+offset_right = 531.0
+offset_bottom = 255.0
+text = "JUGAR"
+
+[node name="BotonOpciones" type="Button" parent="." unique_id=26763307]
+layout_mode = 0
+offset_left = 463.0
+offset_top = 289.0
+offset_right = 552.0
+offset_bottom = 320.0
+text = "OPCIONES"
+
+[node name="BotonSalir" type="Button" parent="." unique_id=1670246270]
+layout_mode = 0
+offset_left = 484.0
+offset_top = 359.0
+offset_right = 536.0
+offset_bottom = 390.0
+text = "SALIR"
+
+[connection signal="pressed" from="BotonJugar" to="." method="_on_boton_jugar_pressed"]
+[connection signal="pressed" from="BotonSalir" to="." method="_on_boton_salir_pressed"]
