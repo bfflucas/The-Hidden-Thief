@@ -1,0 +1,36 @@
+[gd_scene format=3 uid="uid://77qp5lgnrveh"]
+
+[ext_resource type="Script" uid="uid://bpq267qtrdquo" path="res://llave.gd" id="1_7bknt"]
+[ext_resource type="SpriteFrames" uid="uid://bc16ce88tsdg" path="res://sprites/new_sprite_frames.tres" id="2_cr5s1"]
+
+[sub_resource type="Gradient" id="Gradient_wwaip"]
+colors = PackedColorArray(1, 1, 1, 1, 0.9843137, 0.9882353, 0.9882353, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_f8d0f"]
+gradient = SubResource("Gradient_wwaip")
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+fill_to = Vector2(1, 0.5)
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_cr5s1"]
+
+[node name="Llave" type="Area2D" unique_id=1823599735]
+z_index = 1
+collision_layer = 8
+script = ExtResource("1_7bknt")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1270248813]
+scale = Vector2(0.5, 0.5)
+sprite_frames = ExtResource("2_cr5s1")
+animation = &"girar"
+autoplay = "girar"
+
+[node name="PointLight2D" type="PointLight2D" parent="." unique_id=1642563112]
+scale = Vector2(0.99803466, 1)
+energy = 0.5
+texture = SubResource("GradientTexture2D_f8d0f")
+texture_scale = 0.7
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1797047787]
+scale = Vector2(0.43338433, 0.47817463)
+shape = SubResource("CircleShape2D_cr5s1")

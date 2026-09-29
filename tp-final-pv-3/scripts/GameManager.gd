@@ -16,7 +16,7 @@ var nivel_actual: int = 0
 var tiene_tesoro: bool = false
 var alarma_activa: bool = false
 
-var tiempo_escape_maximo: float = 5.0
+var tiempo_escape_maximo: float = 60.0
 var tiempo_restante: float = 0.0
 
 var temporizador_activo: bool = false
@@ -58,7 +58,7 @@ func activar_alarma():
 
 	alarma_activa = true
 
-	tiempo_restante = tiempo_escape_maximo
+	tiempo_restante = tiempo_escape_maximo * SaveManager.obtener_multiplicador_tiempo_alarma()
 	temporizador_activo = true
 
 	alarma_activada.emit()
@@ -96,6 +96,7 @@ func completar_nivel():
 
 	partida_terminada = true
 	temporizador_activo = false
+	SaveManager.desbloquear_nivel(nivel_actual + 1)
 	nivel_completado.emit()
 
 func cargar_nivel(indice: int):

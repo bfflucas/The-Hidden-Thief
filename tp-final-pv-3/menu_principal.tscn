@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://byq873ggvs3hx"]
 
-[ext_resource type="Script" uid="uid://ca3xw1qyjnp8y" path="res://menu_principal.gd" id="1_bj1uy"]
+[ext_resource type="Script" uid="uid://ca3xw1qyjnp8y" path="res://scripts/menu_principal.gd" id="1_bj1uy"]
 
 [node name="MenuPrincipal" type="Control" unique_id=455421212]
 layout_mode = 3
@@ -28,13 +28,21 @@ offset_right = 569.0
 offset_bottom = 70.0
 text = "THE HIDDEN THIEF"
 
-[node name="BotonJugar" type="Button" parent="." unique_id=1789115172]
+[node name="BotonNuevaPartida" type="Button" parent="." unique_id=1789115172]
 layout_mode = 0
-offset_left = 473.0
-offset_top = 224.0
-offset_right = 531.0
-offset_bottom = 255.0
-text = "JUGAR"
+offset_left = 454.0
+offset_top = 178.0
+offset_right = 587.0
+offset_bottom = 209.0
+text = "NUEVA PARTIDA"
+
+[node name="BotonContinuar" type="Button" parent="." unique_id=1147903664]
+layout_mode = 0
+offset_left = 460.0
+offset_top = 235.0
+offset_right = 593.0
+offset_bottom = 266.0
+text = "CONTINUAR"
 
 [node name="BotonOpciones" type="Button" parent="." unique_id=26763307]
 layout_mode = 0
@@ -52,5 +60,136 @@ offset_right = 536.0
 offset_bottom = 390.0
 text = "SALIR"
 
-[connection signal="pressed" from="BotonJugar" to="." method="_on_boton_jugar_pressed"]
+[node name="PantallaDificultad" type="Control" parent="." unique_id=287489178]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Fondo" type="ColorRect" parent="PantallaDificultad" unique_id=1130544416]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.02734375, 0.024993896, 0.024993896, 1)
+
+[node name="Titulo" type="Label" parent="PantallaDificultad" unique_id=739040900]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 23.0
+text = "SELECCIONAR DIFICULTAD"
+
+[node name="BotonFacil" type="Button" parent="PantallaDificultad" unique_id=567482425]
+layout_mode = 0
+offset_left = 395.0
+offset_top = 227.0
+offset_right = 575.0
+offset_bottom = 277.0
+text = "FACIL"
+
+[node name="BotonNormal" type="Button" parent="PantallaDificultad" unique_id=182638167]
+layout_mode = 0
+offset_left = 394.0
+offset_top = 294.0
+offset_right = 574.0
+offset_bottom = 344.0
+text = "NORMAL"
+
+[node name="BotonDificil" type="Button" parent="PantallaDificultad" unique_id=1616699229]
+layout_mode = 0
+offset_left = 397.0
+offset_top = 360.0
+offset_right = 577.0
+offset_bottom = 410.0
+text = "DIFICIL"
+
+[node name="BotonVolver" type="Button" parent="PantallaDificultad" unique_id=621280524]
+layout_mode = 0
+offset_left = 399.0
+offset_top = 483.0
+offset_right = 579.0
+offset_bottom = 533.0
+text = "VOLVER"
+
+[node name="PantallaOpciones" type="Control" parent="." unique_id=1929901325]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Fondo" type="ColorRect" parent="PantallaOpciones" unique_id=137902122]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.76953125, 0.39678955, 0.39678955, 1)
+
+[node name="Titulo" type="Label" parent="PantallaOpciones" unique_id=451774106]
+layout_mode = 0
+offset_left = 466.0
+offset_top = 27.0
+offset_right = 547.0
+offset_bottom = 50.0
+text = "OPCIONES"
+
+[node name="TextoMusica" type="Label" parent="PantallaOpciones" unique_id=787320210]
+layout_mode = 0
+offset_left = 217.0
+offset_top = 148.0
+offset_right = 279.0
+offset_bottom = 171.0
+text = "MÚSICA"
+
+[node name="VolumenMusica" type="HSlider" parent="PantallaOpciones" unique_id=1654477339]
+layout_mode = 0
+offset_left = 471.0
+offset_top = 156.0
+offset_right = 771.0
+offset_bottom = 176.0
+value = 100.0
+
+[node name="TextoEfectos" type="Label" parent="PantallaOpciones" unique_id=391346851]
+layout_mode = 0
+offset_left = 217.0
+offset_top = 242.0
+offset_right = 284.0
+offset_bottom = 265.0
+text = "EFECTOS"
+
+[node name="VolumenEfectos" type="HSlider" parent="PantallaOpciones" unique_id=967379106]
+layout_mode = 0
+offset_left = 475.0
+offset_top = 245.0
+offset_right = 775.0
+offset_bottom = 265.0
+value = 100.0
+
+[node name="BotonVolver" type="Button" parent="PantallaOpciones" unique_id=1659031685]
+layout_mode = 0
+offset_left = 393.0
+offset_top = 419.0
+offset_right = 573.0
+offset_bottom = 469.0
+text = "VOLVER"
+
+[connection signal="pressed" from="BotonNuevaPartida" to="." method="_on_boton_nueva_partida_pressed"]
+[connection signal="pressed" from="BotonContinuar" to="." method="_on_boton_continuar_pressed"]
+[connection signal="pressed" from="BotonOpciones" to="." method="_on_boton_opciones_pressed"]
 [connection signal="pressed" from="BotonSalir" to="." method="_on_boton_salir_pressed"]
+[connection signal="pressed" from="PantallaDificultad/BotonFacil" to="." method="_on_boton_facil_pressed"]
+[connection signal="pressed" from="PantallaDificultad/BotonNormal" to="." method="_on_boton_normal_pressed"]
+[connection signal="pressed" from="PantallaDificultad/BotonDificil" to="." method="_on_boton_dificil_pressed"]
+[connection signal="pressed" from="PantallaDificultad/BotonVolver" to="." method="_on_boton_volver_pressed"]
+[connection signal="value_changed" from="PantallaOpciones/VolumenMusica" to="." method="_on_volumen_musica_value_changed"]
+[connection signal="value_changed" from="PantallaOpciones/VolumenEfectos" to="." method="_on_volumen_efectos_value_changed"]
+[connection signal="pressed" from="PantallaOpciones/BotonVolver" to="." method="_on_boton_volver_opciones_pressed"]

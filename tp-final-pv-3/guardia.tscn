@@ -9,7 +9,7 @@
 [ext_resource type="Texture2D" uid="uid://jdhwcxk5ig0w" path="res://sprites/guardia/caminar_derecha_abajo-Sheet.png" id="7_br28v"]
 [ext_resource type="Texture2D" uid="uid://36ikcol1kvhk" path="res://sprites/guardia/caminar_derecha_arriba-Sheet.png" id="8_7stqq"]
 [ext_resource type="Texture2D" uid="uid://c0i2xvf5qtiog" path="res://sprites/guardia/caminar_arriba-Sheet.png" id="9_josew"]
-[ext_resource type="Texture2D" uid="uid://01gfpoupns8u" path="res://sprites/key-Sheet.png" id="10_3wqqh"]
+[ext_resource type="SpriteFrames" uid="uid://bc16ce88tsdg" path="res://sprites/new_sprite_frames.tres" id="10_fvdt0"]
 [ext_resource type="Texture2D" uid="uid://f1dpjkycdg67" path="res://sprites/guardia/alerta.png" id="11_fvdt0"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_3im4l"]
@@ -299,70 +299,6 @@ blend_mode = 1
 [sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_3wqqh"]
 blend_mode = 1
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_fvdt0"]
-atlas = ExtResource("10_3wqqh")
-region = Rect2(0, 0, 16, 16)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_ev5hw"]
-atlas = ExtResource("10_3wqqh")
-region = Rect2(16, 0, 16, 16)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_s08gb"]
-atlas = ExtResource("10_3wqqh")
-region = Rect2(32, 0, 16, 16)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_dhwxr"]
-atlas = ExtResource("10_3wqqh")
-region = Rect2(48, 0, 16, 16)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_br28v"]
-atlas = ExtResource("10_3wqqh")
-region = Rect2(64, 0, 16, 16)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_7stqq"]
-atlas = ExtResource("10_3wqqh")
-region = Rect2(80, 0, 16, 16)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_josew"]
-atlas = ExtResource("10_3wqqh")
-region = Rect2(96, 0, 16, 16)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_ada0h"]
-atlas = ExtResource("10_3wqqh")
-region = Rect2(112, 0, 16, 16)
-
-[sub_resource type="SpriteFrames" id="SpriteFrames_voua4"]
-animations = [{
-"frames": [{
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_fvdt0")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_ev5hw")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_s08gb")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_dhwxr")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_br28v")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_7stqq")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_josew")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_ada0h")
-}],
-"loop": true,
-"name": &"girar",
-"speed": 5.0
-}]
-
 [node name="Guardia" type="CharacterBody2D" unique_id=39121489]
 z_index = 2
 scale = Vector2(0.7, 0.7)
@@ -396,7 +332,7 @@ modulate = Color(0.73820114, 0.9375, 0.34423828, 1)
 material = SubResource("CanvasItemMaterial_3wqqh")
 position = Vector2(0, -22.857141)
 scale = Vector2(0.5, 0.5)
-sprite_frames = SubResource("SpriteFrames_voua4")
+sprite_frames = ExtResource("10_fvdt0")
 animation = &"girar"
 frame_progress = 0.07850169
 

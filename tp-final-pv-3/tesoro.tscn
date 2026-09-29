@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://i0w3fvmrw0rv"]
 
-[ext_resource type="Script" uid="uid://b2dx0mggxuwxs" path="res://tesoro.gd" id="1_iry1f"]
+[ext_resource type="Script" uid="uid://b2dx0mggxuwxs" path="res://scripts/tesoro.gd" id="1_iry1f"]
 [ext_resource type="Texture2D" uid="uid://ne280g3obkap" path="res://sprites/Museo/monalisa-Sheet.png" id="2_7oadf"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_iry1f"]

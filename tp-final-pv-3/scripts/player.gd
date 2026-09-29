@@ -77,6 +77,7 @@ func interactuar():
 
 			if llave_obtenida != "":
 				agregar_llave(llave_obtenida)
+				AudioManager.reproducir_sfx("res://audio/key.wav", -10.0)
 				return
 
 		# Robar tesoro
@@ -88,7 +89,15 @@ func interactuar():
 		if cuerpo.has_method("intentar_abrir"):
 			cuerpo.intentar_abrir(self)
 			return
+	var areas: Array[Area2D] = area_interaccion.get_overlapping_areas()
 
+	for area in areas:
+		if area.has_method("quitar_llave"):
+			var llave_obtenida: String = area.quitar_llave()
+			if llave_obtenida != "":
+				agregar_llave(llave_obtenida)
+				AudioManager.reproducir_sfx("res://audio/key.wav", -10.0)
+				return
 
 func reproducir_animacion(dir):
 

@@ -6,3 +6,4 @@ extends Node2D
 
 func _ready():
 	player.global_position = punto_entrada.global_position
+	AudioManager.reproducir_musica_normal()

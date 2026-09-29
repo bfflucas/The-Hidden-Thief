@@ -3,7 +3,7 @@
 [ext_resource type="Texture2D" uid="uid://owoyev2gufgp" path="res://sprites/Museo/Dungeon-Sheet.png" id="1_syqxx"]
 
 [node name="Sprite2D" type="Sprite2D" unique_id=696358715]
-z_index = 2
+z_index = 4
 scale = Vector2(0.4, 0.4)
 texture = ExtResource("1_syqxx")
 region_enabled = true

@@ -180,7 +180,8 @@ func cambiar_estado(nuevo_estado: Estado):
 
 		Estado.PERSECUCION:
 			icono_alerta.visible = true
-
+			AudioManager.reproducir_sfx("res://audio/guardia_detecta_player.wav",-15.0)
+			
 	print("Nuevo estado del guardia: ", Estado.keys()[estado_actual])
 
 func estado_alerta(delta):
@@ -501,7 +502,13 @@ func _on_alarma_activada():
 
 func obtener_velocidad_alarma(velocidad_base: float) -> float:
 
-	if alarma_general:
-		return velocidad_base * multiplicador_velocidad_alarma
+	var velocidad_final: float = velocidad_base
 
-	return velocidad_base
+	# Multiplicador según la dificultad de la partida
+	velocidad_final *= SaveManager.obtener_multiplicador_velocidad_guardias()
+
+	# Aumento adicional cuando se activa la alarma
+	if alarma_general:
+		velocidad_final *= multiplicador_velocidad_alarma
+
+	return velocidad_final

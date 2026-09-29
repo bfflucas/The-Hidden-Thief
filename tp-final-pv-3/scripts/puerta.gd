@@ -29,13 +29,15 @@ func intentar_abrir(player) -> bool:
 	if player.consumir_llave(id_llave_necesaria):
 		abrir()
 		return true
-
+	
+	AudioManager.reproducir_sfx("res://audio/door_locked.wav")
 	print("Falta la llave: ", id_llave_necesaria)
 	return false
 
 
 func abrir():
 	abierta = true
+	AudioManager.reproducir_sfx("res://audio/door_open.wav")
 	actualizar_estado()
 
 
