@@ -17,6 +17,9 @@ var puertas_abiertas: Array[String] = []
 var tesoro_robado: bool = false
 var alarma_guardada: bool = false
 var tiempo_alarma_guardado: float = 0.0
+var posiciones_guardias: Dictionary = {}
+var llaves_guardias: Dictionary = {}
+var estados_guardias: Dictionary = {}
 
 func _ready():
 	cargar_partida()
@@ -40,7 +43,10 @@ func guardar_partida():
 		"puertas_abiertas": puertas_abiertas,
 		"tesoro_robado": tesoro_robado,
 		"alarma_guardada": alarma_guardada,
-		"tiempo_alarma_guardado": tiempo_alarma_guardado
+		"tiempo_alarma_guardado": tiempo_alarma_guardado,
+		"posiciones_guardias": posiciones_guardias,
+		"llaves_guardias": llaves_guardias,
+		"estados_guardias": estados_guardias
 	}
 
 	var archivo = FileAccess.open(RUTA_GUARDADO, FileAccess.WRITE)
@@ -92,6 +98,10 @@ func cargar_partida():
 	tesoro_robado = bool(datos.get("tesoro_robado", false))	#false es un valor por defecto si no encuentra uno
 	alarma_guardada = bool(datos.get("alarma_guardada", false))
 	tiempo_alarma_guardado = float(datos.get("tiempo_alarma_guardado", 0.0))
+	
+	posiciones_guardias = datos.get("posiciones_guardias", {}) #{} si carga una partida que no tenía guardadas posiciones de guardias usamos un diccionario vacio y no da error
+	llaves_guardias = datos.get("llaves_guardias", {})
+	estados_guardias = datos.get("estados_guardias", {})
 
 func borrar_partida():
 
@@ -107,9 +117,13 @@ func borrar_partida():
 	nivel_guardado = 0
 	llaves_player.clear()
 	llaves_recogidas.clear()
+	puertas_abiertas.clear()
 	tesoro_robado = false
 	alarma_guardada = false
 	tiempo_alarma_guardado = 0.0
+	posiciones_guardias.clear()
+	llaves_guardias.clear()
+	estados_guardias.clear()
 
 func desbloquear_nivel(indice: int):
 
@@ -150,4 +164,32 @@ func guardar_checkpoint(posicion: Vector2, nivel: int, llaves: Array[String]):
 	llaves_player = llaves.duplicate()
 	alarma_guardada = GameManager.alarma_activa
 	tiempo_alarma_guardado = GameManager.tiempo_restante
+	
+	posiciones_guardias.clear()
+	llaves_guardias.clear()
+	estados_guardias.clear()
+	var guardias = get_tree().get_nodes_in_group("guardias")
+
+	for guardia in guardias:
+		posiciones_guardias[str(guardia.name)] = {
+			"x": guardia.global_position.x,
+			"y": guardia.global_position.y
+		}
+		llaves_guardias[str(guardia.name)] = guardia.id_llave
+		estados_guardias[str(guardia.name)] = {
+			"estado_actual": int(guardia.estado_actual), #se puede guardar como número en JSON
+			"posicion_sospechosa_x": guardia.posicion_sospechosa.x,
+			"posicion_sospechosa_y": guardia.posicion_sospechosa.y,
+
+			"ultima_posicion_player_x": guardia.ultima_posicion_player.x,
+			"ultima_posicion_player_y": guardia.ultima_posicion_player.y,
+
+			"fase_alerta": int(guardia.fase_alerta),
+			"tiempo_alerta_actual": guardia.tiempo_alerta_actual,
+			"tiempo_sin_ver_player": guardia.tiempo_sin_ver_player
+		}
+	
+	
+	
+	
 	guardar_partida()

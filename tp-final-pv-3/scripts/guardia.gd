@@ -512,3 +512,16 @@ func obtener_velocidad_alarma(velocidad_base: float) -> float:
 		velocidad_final *= multiplicador_velocidad_alarma
 
 	return velocidad_final
+
+func actualizar_estado_restaurado():
+	match estado_actual:
+
+		Estado.PATRULLA:
+			icono_alerta.visible = false
+
+		Estado.ALERTA:
+			icono_alerta.visible = true
+			navigation_agent.target_position = posicion_sospechosa
+
+		Estado.PERSECUCION:
+			icono_alerta.visible = true
