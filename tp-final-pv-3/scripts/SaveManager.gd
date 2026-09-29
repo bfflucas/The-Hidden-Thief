@@ -8,6 +8,16 @@ var volumen_efectos: float = 1.0
 var dificultad: String = "normal"
 var partida_iniciada: bool = false
 
+var hay_guardado_manual: bool = false
+var posicion_player: Vector2 = Vector2.ZERO
+var nivel_guardado: int = 0
+var llaves_player: Array[String] = []
+var llaves_recogidas: Array[String] = []
+var puertas_abiertas: Array[String] = []
+var tesoro_robado: bool = false
+var alarma_guardada: bool = false
+var tiempo_alarma_guardado: float = 0.0
+
 func _ready():
 	cargar_partida()
 
@@ -19,7 +29,18 @@ func guardar_partida():
 		"volumen_musica": volumen_musica,
 		"volumen_efectos": volumen_efectos,
 		"dificultad": dificultad,
-		"partida_iniciada": partida_iniciada
+		"partida_iniciada": partida_iniciada,
+		
+		"hay_guardado_manual": hay_guardado_manual,
+		"nivel_guardado": nivel_guardado,
+		"posicion_player_x": posicion_player.x,
+		"posicion_player_y": posicion_player.y,
+		"llaves_player": llaves_player,
+		"llaves_recogidas": llaves_recogidas,
+		"puertas_abiertas": puertas_abiertas,
+		"tesoro_robado": tesoro_robado,
+		"alarma_guardada": alarma_guardada,
+		"tiempo_alarma_guardado": tiempo_alarma_guardado
 	}
 
 	var archivo = FileAccess.open(RUTA_GUARDADO, FileAccess.WRITE)
@@ -45,7 +66,32 @@ func cargar_partida():
 	volumen_efectos = float(datos.get("volumen_efectos", 1.0))
 	dificultad = str(datos.get("dificultad", "normal"))
 	partida_iniciada = bool(datos.get("partida_iniciada", false))
+	
+	hay_guardado_manual = bool(datos.get("hay_guardado_manual", false))
+	nivel_guardado = int(datos.get("nivel_guardado", 0))
 
+	posicion_player = Vector2(
+		float(datos.get("posicion_player_x", 0.0)),
+		float(datos.get("posicion_player_y", 0.0))
+	)
+	llaves_player.clear()
+
+	for llave in datos.get("llaves_player", []):
+		llaves_player.append(str(llave))
+		
+	llaves_recogidas.clear()
+
+	for llave in datos.get("llaves_recogidas", []):
+		llaves_recogidas.append(str(llave))	
+	
+	puertas_abiertas.clear()
+
+	for puerta in datos.get("puertas_abiertas", []):
+		puertas_abiertas.append(str(puerta))
+		
+	tesoro_robado = bool(datos.get("tesoro_robado", false))	#false es un valor por defecto si no encuentra uno
+	alarma_guardada = bool(datos.get("alarma_guardada", false))
+	tiempo_alarma_guardado = float(datos.get("tiempo_alarma_guardado", 0.0))
 
 func borrar_partida():
 
@@ -55,6 +101,15 @@ func borrar_partida():
 	nivel_desbloqueado = 0
 	dificultad = "normal"
 	partida_iniciada = false
+	
+	hay_guardado_manual = false
+	posicion_player = Vector2.ZERO
+	nivel_guardado = 0
+	llaves_player.clear()
+	llaves_recogidas.clear()
+	tesoro_robado = false
+	alarma_guardada = false
+	tiempo_alarma_guardado = 0.0
 
 func desbloquear_nivel(indice: int):
 
@@ -87,3 +142,12 @@ func obtener_multiplicador_tiempo_alarma() -> float:
 			return 0.75
 		_:
 			return 1.0
+
+func guardar_checkpoint(posicion: Vector2, nivel: int, llaves: Array[String]):
+	hay_guardado_manual = true
+	posicion_player = posicion
+	nivel_guardado = nivel
+	llaves_player = llaves.duplicate()
+	alarma_guardada = GameManager.alarma_activa
+	tiempo_alarma_guardado = GameManager.tiempo_restante
+	guardar_partida()

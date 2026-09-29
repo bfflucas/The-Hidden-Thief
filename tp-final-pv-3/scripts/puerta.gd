@@ -14,6 +14,11 @@ var abierta: bool = false
 
 
 func _ready():
+	var nombre_puerta: String = str(name)
+
+	if SaveManager.hay_guardado_manual and nombre_puerta in SaveManager.puertas_abiertas:
+		abierta = true
+
 	actualizar_estado()
 
 
@@ -37,6 +42,12 @@ func intentar_abrir(player) -> bool:
 
 func abrir():
 	abierta = true
+
+	var nombre_puerta: String = str(name)
+
+	if not nombre_puerta in SaveManager.puertas_abiertas:
+		SaveManager.puertas_abiertas.append(nombre_puerta)
+
 	AudioManager.reproducir_sfx("res://audio/door_open.wav")
 	actualizar_estado()
 

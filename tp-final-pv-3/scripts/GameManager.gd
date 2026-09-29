@@ -125,3 +125,12 @@ func reiniciar_nivel_actual():
 	reiniciar_estado()
 
 	get_tree().reload_current_scene()
+
+func restaurar_alarma(tiempo_guardado: float):
+	alarma_activa = true
+	tiene_tesoro = true
+	tiempo_restante = tiempo_guardado
+	temporizador_activo = true
+
+	alarma_activada.emit()
+	tiempo_actualizado.emit(tiempo_restante)

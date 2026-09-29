@@ -19,7 +19,10 @@ func _on_boton_nueva_partida_pressed() -> void:
 
 
 func _on_boton_continuar_pressed() -> void:
-	GameManager.cargar_nivel(SaveManager.nivel_desbloqueado)
+	if SaveManager.hay_guardado_manual:
+		GameManager.cargar_nivel(SaveManager.nivel_guardado)
+	else:
+		GameManager.cargar_nivel(SaveManager.nivel_desbloqueado)
 
 
 func _on_boton_volver_pressed() -> void:

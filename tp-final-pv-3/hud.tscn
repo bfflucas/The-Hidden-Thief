@@ -6,12 +6,20 @@
 script = ExtResource("1_37p78")
 
 [node name="TiempoLabel" type="Label" parent="." unique_id=1932393888]
-offset_right = 40.0
-offset_bottom = 23.0
+offset_left = 36.0
+offset_top = 21.0
+offset_right = 76.0
+offset_bottom = 44.0
+
+[node name="LlavesLabel" type="Label" parent="." unique_id=1456435561]
+offset_left = 898.0
+offset_top = 11.0
+offset_right = 998.0
+offset_bottom = 61.0
+text = "Llaves: 0"
 
 [node name="PantallaResultado" type="Control" parent="." unique_id=540801174]
 process_mode = 2
-visible = false
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -37,22 +45,31 @@ offset_bottom = 182.0
 
 [node name="BotonPrincipal" type="Button" parent="PantallaResultado" unique_id=894844336]
 layout_mode = 0
-offset_left = 242.0
-offset_top = 472.0
-offset_right = 422.0
-offset_bottom = 522.0
+offset_left = 473.0
+offset_top = 322.0
+offset_right = 653.0
+offset_bottom = 372.0
 text = "REINTENTAR"
 
 [node name="BotonMenu" type="Button" parent="PantallaResultado" unique_id=67062000]
 layout_mode = 0
-offset_left = 725.0
-offset_top = 506.0
-offset_right = 905.0
-offset_bottom = 556.0
+offset_left = 477.0
+offset_top = 394.0
+offset_right = 657.0
+offset_bottom = 444.0
 theme_override_colors/font_color = Color(0.91796875, 0.20708084, 0.043029785, 1)
 theme_override_colors/font_pressed_color = Color(0.28701782, 0.64453125, 0.5523598, 1)
 theme_override_colors/font_hover_color = Color(0.87890625, 0.36735535, 0.36735535, 1)
 text = "MENU"
 
+[node name="BotonGuardar" type="Button" parent="PantallaResultado" unique_id=787164090]
+layout_mode = 0
+offset_left = 479.0
+offset_top = 466.0
+offset_right = 659.0
+offset_bottom = 516.0
+text = "GUARDAR PARTIDA"
+
 [connection signal="pressed" from="PantallaResultado/BotonPrincipal" to="." method="_on_boton_principal_pressed"]
 [connection signal="pressed" from="PantallaResultado/BotonMenu" to="." method="_on_boton_menu_pressed"]
+[connection signal="pressed" from="PantallaResultado/BotonGuardar" to="." method="_on_boton_guardar_pressed"]

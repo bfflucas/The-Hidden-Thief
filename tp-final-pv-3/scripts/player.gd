@@ -1,5 +1,6 @@
 extends CharacterBody2D
 
+signal llaves_actualizadas(cantidad: int)
 @export_category("Movimiento")
 @export var velocidad_normal: float = 150.0
 @export var velocidad_sigilo: float = 70.0
@@ -131,9 +132,11 @@ func agregar_llave(id_llave: String):
 		return
 
 	llaves.append(id_llave)
-
+	llaves_actualizadas.emit(llaves.size())
 	print("Llave obtenida: ", id_llave)
 	print("Llaves actuales: ", llaves)
+	print("Cantidad de llaves: ", llaves.size())
+	
 
 
 func tiene_llave(id_llave: String) -> bool:
@@ -147,6 +150,7 @@ func tiene_alguna_llave() -> bool:
 func consumir_llave(id_llave: String) -> bool:
 	if id_llave in llaves:
 		llaves.erase(id_llave)
+		llaves_actualizadas.emit(llaves.size())
 		return true
 
 	return false

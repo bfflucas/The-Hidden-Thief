@@ -5,6 +5,11 @@ extends Area2D
 
 var recogida: bool = false
 
+func _ready():
+	if SaveManager.hay_guardado_manual and id_llave in SaveManager.llaves_recogidas:
+		queue_free()
+		return
+
 
 func quitar_llave() -> String:
 	if recogida:
@@ -16,6 +21,10 @@ func quitar_llave() -> String:
 	recogida = true
 
 	var llave_obtenida: String = id_llave
+	
+	if not id_llave in SaveManager.llaves_recogidas:
+		SaveManager.llaves_recogidas.append(id_llave)
+	
 	id_llave = ""
 
 	queue_free()

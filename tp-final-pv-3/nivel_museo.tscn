@@ -848,7 +848,7 @@ navigation_polygon = SubResource("NavigationPolygon_i16ir")
 [node name="HUD" parent="." unique_id=1147795074 instance=ExtResource("21_shum7")]
 
 [node name="Tesoro" parent="." unique_id=193205422 instance=ExtResource("19_t4c1v")]
-position = Vector2(513, -440)
+position = Vector2(-171, 1000)
 
 [node name="PuntoEntrada" type="Marker2D" parent="." unique_id=1238606811]
 position = Vector2(-192, 1105)
