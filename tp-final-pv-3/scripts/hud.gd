@@ -75,7 +75,7 @@ func _on_boton_principal_pressed():
 func _on_boton_menu_pressed():
 	get_tree().paused = false
 	GameManager.reiniciar_estado()
-	get_tree().change_scene_to_file("res://menu_principal.tscn")
+	get_tree().change_scene_to_file("res://escenas/niveles/menu_principal.tscn")
 
 func _on_nivel_completado():
 	boton_guardar.visible = false

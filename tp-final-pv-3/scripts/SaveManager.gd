@@ -188,8 +188,23 @@ func guardar_checkpoint(posicion: Vector2, nivel: int, llaves: Array[String]):
 			"tiempo_alerta_actual": guardia.tiempo_alerta_actual,
 			"tiempo_sin_ver_player": guardia.tiempo_sin_ver_player
 		}
-	
-	
-	
-	
+	guardar_partida()
+
+func borrar_checkpoint():
+	hay_guardado_manual = false
+	posicion_player = Vector2.ZERO
+	nivel_guardado = 0
+
+	llaves_player.clear()
+	llaves_recogidas.clear()
+	puertas_abiertas.clear()
+
+	tesoro_robado = false
+	alarma_guardada = false
+	tiempo_alarma_guardado = 0.0
+
+	posiciones_guardias.clear()
+	llaves_guardias.clear()
+	estados_guardias.clear()
+
 	guardar_partida()

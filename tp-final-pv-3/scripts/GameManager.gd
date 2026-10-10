@@ -8,7 +8,9 @@ signal jugador_derrotado
 signal nivel_completado
 
 var niveles: Array[String] = [
-	"res://nivel_museo.tscn"
+	"res://escenas/niveles/nivel_museo.tscn",
+	"res://escenas/niveles/nivel_mansion.tscn",
+	"res://escenas/niveles/nivel_banco.tscn"
 ]
 
 var nivel_actual: int = 0
@@ -97,7 +99,9 @@ func completar_nivel():
 	partida_terminada = true
 	temporizador_activo = false
 	SaveManager.desbloquear_nivel(nivel_actual + 1)
+	SaveManager.borrar_checkpoint()
 	nivel_completado.emit()
+	
 
 func cargar_nivel(indice: int):
 

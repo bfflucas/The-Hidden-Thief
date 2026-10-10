@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://77qp5lgnrveh"]
 
-[ext_resource type="Script" uid="uid://bpq267qtrdquo" path="res://llave.gd" id="1_7bknt"]
+[ext_resource type="Script" uid="uid://bpq267qtrdquo" path="res://scripts/llave.gd" id="1_7bknt"]
 [ext_resource type="SpriteFrames" uid="uid://bc16ce88tsdg" path="res://sprites/new_sprite_frames.tres" id="2_cr5s1"]
 
 [sub_resource type="Gradient" id="Gradient_wwaip"]

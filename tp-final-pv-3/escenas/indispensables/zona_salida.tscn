@@ -1,0 +1,97 @@
+[gd_scene format=3 uid="uid://yg1nwavog1ae"]
+
+[ext_resource type="Script" uid="uid://dmukasg6ixt4m" path="res://scripts/zona_salida.gd" id="1_0qr3c"]
+[ext_resource type="Texture2D" uid="uid://qrev2b0c4npm" path="res://sprites/ventana_viento.png" id="2_ekpxp"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_hhwtw"]
+size = Vector2(14.373219, 9.474371)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_p48py"]
+atlas = ExtResource("2_ekpxp")
+region = Rect2(0, 0, 160, 176)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_8y62e"]
+atlas = ExtResource("2_ekpxp")
+region = Rect2(160, 0, 160, 176)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_juuqs"]
+atlas = ExtResource("2_ekpxp")
+region = Rect2(320, 0, 160, 176)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_iqofw"]
+atlas = ExtResource("2_ekpxp")
+region = Rect2(480, 0, 160, 176)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ghsvl"]
+atlas = ExtResource("2_ekpxp")
+region = Rect2(640, 0, 160, 176)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_nvpcm"]
+atlas = ExtResource("2_ekpxp")
+region = Rect2(800, 0, 160, 176)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ddq2r"]
+atlas = ExtResource("2_ekpxp")
+region = Rect2(960, 0, 160, 176)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_xvumq"]
+atlas = ExtResource("2_ekpxp")
+region = Rect2(1120, 0, 160, 176)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_pwpem"]
+atlas = ExtResource("2_ekpxp")
+region = Rect2(1280, 0, 160, 176)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_iwowf"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_p48py")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_8y62e")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_juuqs")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_iqofw")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ghsvl")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_nvpcm")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ddq2r")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_xvumq")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_pwpem")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[node name="ZonaSalida" type="Area2D" unique_id=306609680]
+z_index = 4
+script = ExtResource("1_0qr3c")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1893532908]
+visible = false
+position = Vector2(0, 1.000001)
+scale = Vector2(1.5306245, 2.9553416)
+shape = SubResource("RectangleShape2D_hhwtw")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=986733790]
+scale = Vector2(0.15, 0.15)
+sprite_frames = SubResource("SpriteFrames_iwowf")
+autoplay = "default"
+frame = 1
+frame_progress = 0.54646933
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
