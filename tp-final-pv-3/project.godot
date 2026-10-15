@@ -11,7 +11,7 @@ config_version=5
 [application]
 
 config/name="TPFinal_PV3"
-run/main_scene="uid://bydw5on562gkv"
+run/main_scene="uid://byq873ggvs3hx"
 config/features=PackedStringArray("4.6", "GL Compatibility")
 
 [audio]
@@ -23,10 +23,15 @@ buses/default_bus_layout="uid://dnyw6bwcxjr4"
 GameManager="*uid://djyyglbocpfy3"
 SaveManager="*uid://dm13j2ha24fdo"
 AudioManager="*uid://s7yhebddpfs0"
+HoverGlobal="*uid://dklw406bspr1l"
 
 [global_group]
 
 navigation_polygon_source_geometry_group=""
+
+[gui]
+
+theme/custom="uid://ywtp0rpg66kf"
 
 [input]
 

@@ -1,6 +1,6 @@
 extends Control
 
-@onready var boton_continuar: Button = $BotonContinuar
+@onready var boton_continuar: Button = $ContenedorBotones/BotonContinuar
 @onready var pantalla_dificultad: Control = $PantallaDificultad
 @onready var pantalla_opciones: Control = $PantallaOpciones
 @onready var volumen_musica: HSlider = $PantallaOpciones/VolumenMusica
@@ -68,3 +68,7 @@ func _on_volumen_efectos_value_changed(value: float) -> void:
 	SaveManager.volumen_efectos = value / 100.0
 	AudioManager.aplicar_volumen_efectos()
 	SaveManager.guardar_partida()
+
+
+func _on_boton_tutorial_pressed() -> void:
+	get_tree().change_scene_to_file("res://escenas/niveles/tutorial.tscn")

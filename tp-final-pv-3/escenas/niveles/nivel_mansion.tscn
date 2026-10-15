@@ -1963,5 +1963,6 @@ color = Color(0.31055298, 0.3203125, 0.2715149, 1)
 position = Vector2(-292, -109)
 
 [node name="NavigationRegion2D" type="NavigationRegion2D" parent="." unique_id=778248171]
+visible = false
 light_mask = 12
 navigation_polygon = SubResource("NavigationPolygon_ufww7")

@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://byq873ggvs3hx"]
 
 [ext_resource type="Script" uid="uid://ca3xw1qyjnp8y" path="res://scripts/menu_principal.gd" id="1_bj1uy"]
+[ext_resource type="AudioStream" uid="uid://bo58gdj7y3yw7" path="res://audio/musica_menu.mp3" id="2_ek572"]
 
 [node name="MenuPrincipal" type="Control" unique_id=455421212]
 layout_mode = 3
@@ -20,45 +21,54 @@ grow_horizontal = 2
 grow_vertical = 2
 color = Color(0.14453125, 0.13380432, 0.13380432, 1)
 
-[node name="Titulo" type="Label" parent="." unique_id=1169080622]
-layout_mode = 0
-offset_left = 425.0
-offset_top = 47.0
-offset_right = 569.0
-offset_bottom = 70.0
-text = "THE HIDDEN THIEF"
+[node name="ContenedorBotones" type="VBoxContainer" parent="." unique_id=47638417]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -63.0
+offset_top = -70.5
+offset_right = 157.0
+offset_bottom = 279.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 8
 
-[node name="BotonNuevaPartida" type="Button" parent="." unique_id=1789115172]
-layout_mode = 0
-offset_left = 454.0
-offset_top = 178.0
-offset_right = 587.0
-offset_bottom = 209.0
+[node name="BotonNuevaPartida" type="Button" parent="ContenedorBotones" unique_id=1789115172]
+custom_minimum_size = Vector2(150, 40)
+layout_mode = 2
 text = "NUEVA PARTIDA"
 
-[node name="BotonContinuar" type="Button" parent="." unique_id=1147903664]
-layout_mode = 0
-offset_left = 460.0
-offset_top = 235.0
-offset_right = 593.0
-offset_bottom = 266.0
+[node name="BotonContinuar" type="Button" parent="ContenedorBotones" unique_id=1147903664]
+custom_minimum_size = Vector2(150, 40)
+layout_mode = 2
 text = "CONTINUAR"
 
-[node name="BotonOpciones" type="Button" parent="." unique_id=26763307]
-layout_mode = 0
-offset_left = 463.0
-offset_top = 289.0
-offset_right = 552.0
-offset_bottom = 320.0
+[node name="BotonOpciones" type="Button" parent="ContenedorBotones" unique_id=26763307]
+custom_minimum_size = Vector2(150, 40)
+layout_mode = 2
 text = "OPCIONES"
 
-[node name="BotonSalir" type="Button" parent="." unique_id=1670246270]
-layout_mode = 0
-offset_left = 484.0
-offset_top = 359.0
-offset_right = 536.0
-offset_bottom = 390.0
+[node name="BotonTutorial" type="Button" parent="ContenedorBotones" unique_id=1224739760]
+custom_minimum_size = Vector2(150, 40)
+layout_mode = 2
+text = "TUTORIAL"
+
+[node name="BotonSalir" type="Button" parent="ContenedorBotones" unique_id=1670246270]
+custom_minimum_size = Vector2(150, 40)
+layout_mode = 2
 text = "SALIR"
+
+[node name="Titulo" type="Label" parent="." unique_id=1169080622]
+layout_mode = 0
+offset_left = 464.0
+offset_top = 147.0
+offset_right = 764.0
+offset_bottom = 187.0
+theme_override_font_sizes/font_size = 22
+text = "THE HIDDEN THIEF"
 
 [node name="PantallaDificultad" type="Control" parent="." unique_id=287489178]
 visible = false
@@ -90,7 +100,7 @@ offset_left = 395.0
 offset_top = 227.0
 offset_right = 575.0
 offset_bottom = 277.0
-text = "FACIL"
+text = "FÁCIL"
 
 [node name="BotonNormal" type="Button" parent="PantallaDificultad" unique_id=182638167]
 layout_mode = 0
@@ -106,7 +116,7 @@ offset_left = 397.0
 offset_top = 360.0
 offset_right = 577.0
 offset_bottom = 410.0
-text = "DIFICIL"
+text = "DIFÍCIL"
 
 [node name="BotonVolver" type="Button" parent="PantallaDificultad" unique_id=621280524]
 layout_mode = 0
@@ -182,10 +192,18 @@ offset_right = 573.0
 offset_bottom = 469.0
 text = "VOLVER"
 
-[connection signal="pressed" from="BotonNuevaPartida" to="." method="_on_boton_nueva_partida_pressed"]
-[connection signal="pressed" from="BotonContinuar" to="." method="_on_boton_continuar_pressed"]
-[connection signal="pressed" from="BotonOpciones" to="." method="_on_boton_opciones_pressed"]
-[connection signal="pressed" from="BotonSalir" to="." method="_on_boton_salir_pressed"]
+[node name="MusicaMenu" type="AudioStreamPlayer" parent="." unique_id=442209593]
+stream = ExtResource("2_ek572")
+volume_db = -15.0
+autoplay = true
+bus = &"Music"
+parameters/looping = true
+
+[connection signal="pressed" from="ContenedorBotones/BotonNuevaPartida" to="." method="_on_boton_nueva_partida_pressed"]
+[connection signal="pressed" from="ContenedorBotones/BotonContinuar" to="." method="_on_boton_continuar_pressed"]
+[connection signal="pressed" from="ContenedorBotones/BotonOpciones" to="." method="_on_boton_opciones_pressed"]
+[connection signal="pressed" from="ContenedorBotones/BotonTutorial" to="." method="_on_boton_tutorial_pressed"]
+[connection signal="pressed" from="ContenedorBotones/BotonSalir" to="." method="_on_boton_salir_pressed"]
 [connection signal="pressed" from="PantallaDificultad/BotonFacil" to="." method="_on_boton_facil_pressed"]
 [connection signal="pressed" from="PantallaDificultad/BotonNormal" to="." method="_on_boton_normal_pressed"]
 [connection signal="pressed" from="PantallaDificultad/BotonDificil" to="." method="_on_boton_dificil_pressed"]

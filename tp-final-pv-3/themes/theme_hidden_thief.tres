@@ -1,0 +1,40 @@
+[gd_resource type="Theme" format=3 uid="uid://ywtp0rpg66kf"]
+
+[ext_resource type="FontFile" uid="uid://cjmtbrlfodyd3" path="res://fonts/PressStart2P-Regular.ttf" id="1_tfrni"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_tfrni"]
+bg_color = Color(0.5472176, 0.88671875, 0.35676575, 1)
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.096450806, 0.3893094, 0.50390625, 1)
+border_blend = true
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+shadow_color = Color(0.64453125, 0.067977905, 0.067977905, 0.6)
+shadow_size = 1
+shadow_offset = Vector2(1, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_r3b4j"]
+bg_color = Color(0.13851929, 0.61701345, 0.6953125, 1)
+border_width_right = 1
+border_width_bottom = 2
+border_color = Color(0.07843137, 0.20986518, 0.7254902, 1)
+border_blend = true
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+shadow_color = Color(0.03137255, 0.015686275, 0.015686275, 1)
+shadow_size = 1
+shadow_offset = Vector2(1, 1)
+
+[resource]
+Button/colors/font_color = Color(0.11407471, 0.17260408, 0.328125, 1)
+Button/colors/font_hover_color = Color(0.48046875, 0.0944134, 0.043167114, 1)
+Button/fonts/font = ExtResource("1_tfrni")
+Button/styles/hover = SubResource("StyleBoxFlat_tfrni")
+Button/styles/normal = SubResource("StyleBoxFlat_r3b4j")
+Label/fonts/font = ExtResource("1_tfrni")
+RichTextLabel/fonts/normal_font = ExtResource("1_tfrni")

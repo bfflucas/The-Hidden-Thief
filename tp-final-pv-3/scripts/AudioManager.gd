@@ -1,5 +1,11 @@
 extends Node
 
+@export_category("Volumen de audio")
+
+@export var volumen_musica_normal: float = -15.0
+@export var volumen_musica_alarma: float = -18.0
+@export var volumen_sfx: float = 0.0
+
 var reproductor_musica: AudioStreamPlayer
 var reproductor_sfx: AudioStreamPlayer
 
@@ -42,7 +48,7 @@ func reproducir_musica_normal():
 		musica.loop = true
 
 	reproductor_musica.stream = musica
-	reproductor_musica.volume_db = 0.0
+	reproductor_musica.volume_db = volumen_musica_normal
 	reproductor_musica.play()
 
 func _on_alarma_activada():
@@ -57,7 +63,7 @@ func reproducir_musica_alarma():
 
 	reproductor_musica.stop()
 	reproductor_musica.stream = musica
-	reproductor_musica.volume_db = 10.0
+	reproductor_musica.volume_db = volumen_musica_alarma
 	reproductor_musica.play()
 
 func detener_musica():
@@ -70,5 +76,5 @@ func reproducir_sfx(ruta: String, volumen_db: float = 0.0):
 		return
 
 	reproductor_sfx.stream = sonido
-	reproductor_sfx.volume_db = volumen_db
+	reproductor_sfx.volume_db = volumen_db + volumen_sfx
 	reproductor_sfx.play()

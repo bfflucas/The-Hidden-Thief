@@ -1,5 +1,6 @@
 extends CanvasLayer
 
+@export var permitir_guardar: bool = true
 @onready var tiempo_label: Label = $TiempoLabel
 @onready var llaves_label: Label = $LlavesLabel
 @onready var pantalla_resultado: Control = $PantallaResultado
@@ -103,11 +104,10 @@ func abrir_pausa():
 
 	titulo.text = "PAUSA"
 	boton_principal.text = "REANUDAR"
-	boton_guardar.visible = true
+	boton_guardar.visible = permitir_guardar
 
 	pantalla_resultado.visible = true
 	get_tree().paused = true
-
 
 func cerrar_pausa():
 	pantalla_resultado.visible = false
@@ -116,6 +116,9 @@ func cerrar_pausa():
 
 
 func _on_boton_guardar_pressed() -> void:
+	if not permitir_guardar:
+		return
+	
 	var player = get_tree().get_first_node_in_group("player")
 
 	if player == null:

@@ -37,7 +37,6 @@ var fase_alerta: FaseAlerta = FaseAlerta.YENDO
 
 var tiempo_alerta_actual: float = 0.0
 
-
 @onready var sprite: AnimatedSprite2D = $AnimatedSprite2D
 @onready var direccion_vision: Node2D = $DireccionVision
 @onready var icono_alerta: Sprite2D = $IconoAlerta
@@ -76,17 +75,39 @@ var indice_objetivo: int = 0
 
 @onready var icono_llave: AnimatedSprite2D = $IconoLlave
 
+# CONFIGURACION EXCLUSIVA DEL TUTORIAL
+@export_category("Tutorial")
+@export var es_guardia_tutorial: bool = false
+@export var tiempo_busqueda_tutorial: float = 3.0
+
+var tiempo_busqueda_actual: float = 0.0
+
+signal jugador_atrapado_tutorial
+
+
 func _ready():
 	indice_objetivo = 0
 	icono_alerta.visible = false
+
 	if id_llave == "":
 		icono_llave.visible = false
 	else:
 		icono_llave.visible = true
 		icono_llave.play("girar")
+
 	GameManager.alarma_activada.connect(_on_alarma_activada)
 
+
 func _physics_process(delta):
+
+	# Limite de persecucion y alerta del tutorial
+	if es_guardia_tutorial:
+		if estado_actual == Estado.ALERTA or estado_actual == Estado.PERSECUCION:
+			tiempo_busqueda_actual += delta
+
+			if tiempo_busqueda_actual >= tiempo_busqueda_tutorial:
+				volver_a_patrulla_tutorial()
+				return
 
 	match estado_actual:
 
@@ -98,6 +119,7 @@ func _physics_process(delta):
 
 		Estado.PERSECUCION:
 			estado_persecucion(delta)
+
 
 func estado_patrulla(_delta):
 
@@ -125,12 +147,10 @@ func estado_patrulla(_delta):
 			cambiar_estado(Estado.ALERTA)
 			return
 
-
 	if puntos_patrulla.is_empty():
 		velocity = Vector2.ZERO
 		sprite.pause()
 		return
-
 
 	var objetivo_actual: Marker2D = puntos_patrulla[indice_objetivo]
 
@@ -144,9 +164,10 @@ func estado_patrulla(_delta):
 		return
 
 	mover_con_navigation(
-	objetivo_actual.global_position,
-	obtener_velocidad_alarma(velocidad)
-)
+		objetivo_actual.global_position,
+		obtener_velocidad_alarma(velocidad)
+	)
+
 
 func comprobar_si_atrapo_player():
 
@@ -158,8 +179,13 @@ func comprobar_si_atrapo_player():
 		var objeto = colision.get_collider()
 
 		if objeto == player:
-			GameManager.perder_partida()
+			if es_guardia_tutorial:
+				jugador_atrapado_tutorial.emit()
+				volver_a_patrulla_tutorial()
+			else:
+				GameManager.perder_partida()
 			return
+
 
 func cambiar_estado(nuevo_estado: Estado):
 
@@ -180,16 +206,20 @@ func cambiar_estado(nuevo_estado: Estado):
 
 		Estado.PERSECUCION:
 			icono_alerta.visible = true
-			AudioManager.reproducir_sfx("res://audio/guardia_detecta_player.wav",-15.0)
-			
+			AudioManager.reproducir_sfx(
+				"res://audio/guardia_detecta_player.wav", -15.0
+			)
+
 	print("Nuevo estado del guardia: ", Estado.keys()[estado_actual])
 
+
 func estado_alerta(delta):
+
 	if puede_ver_player():
-			ultima_posicion_player = player.global_position
-			tiempo_sin_ver_player = 0.0
-			cambiar_estado(Estado.PERSECUCION)
-			return
+		ultima_posicion_player = player.global_position
+		tiempo_sin_ver_player = 0.0
+		cambiar_estado(Estado.PERSECUCION)
+		return
 
 	match fase_alerta:
 
@@ -199,100 +229,91 @@ func estado_alerta(delta):
 		FaseAlerta.ESPERANDO:
 			esperar_en_alerta(delta)
 
+
 func ir_a_investigar():
 
 	# Mientras investiga, sigue escuchando nuevos ruidos
 	if player != null:
 
 		var radio_ruido: float = player.obtener_radio_ruido()
-		var distancia_player: float = global_position.distance_to(player.global_position)
+		var distancia_player: float = global_position.distance_to(
+			player.global_position
+		)
 
 		if radio_ruido > 0.0 and distancia_player <= radio_ruido:
-
 			posicion_sospechosa = player.global_position
 			navigation_agent.target_position = posicion_sospechosa
 
 	var distancia: float = global_position.distance_to(posicion_sospechosa)
 
 	if distancia <= distancia_investigacion:
-
 		velocity = Vector2.ZERO
-
 		fase_alerta = FaseAlerta.ESPERANDO
-
 		tiempo_alerta_actual = tiempo_alerta
-
 		sprite.pause()
-
 		return
 
 	mover_con_navigation(
-	posicion_sospechosa,
-	obtener_velocidad_alarma(velocidad_alerta)
-)
-	
+		posicion_sospechosa,
+		obtener_velocidad_alarma(velocidad_alerta)
+	)
+
+
 func esperar_en_alerta(delta):
 
 	velocity = Vector2.ZERO
-
 	sprite.pause()
-
 	actualizar_luz()
 
-	# Mientras está quieto, también sigue escuchando
+	# Mientras esta quieto, tambien sigue escuchando
 	if player != null:
 
 		var radio_ruido: float = player.obtener_radio_ruido()
-		var distancia_player: float = global_position.distance_to(player.global_position)
+		var distancia_player: float = global_position.distance_to(
+			player.global_position
+		)
 
 		if radio_ruido > 0.0 and distancia_player <= radio_ruido:
-
 			posicion_sospechosa = player.global_position
-
 			fase_alerta = FaseAlerta.YENDO
-
 			navigation_agent.target_position = posicion_sospechosa
-
 			return
 
 	tiempo_alerta_actual -= delta
 
 	if tiempo_alerta_actual <= 0.0:
 		cambiar_estado(Estado.PATRULLA)
-		
-		
+
+
 func estado_persecucion(delta):
 
 	if player == null:
 		return
 
 	if puede_ver_player():
-
 		ultima_posicion_player = player.global_position
 		tiempo_sin_ver_player = 0.0
 
 		mover_con_navigation(
-		player.global_position,
-		obtener_velocidad_alarma(velocidad_persecucion)
+			player.global_position,
+			obtener_velocidad_alarma(velocidad_persecucion)
 		)
 
 	else:
-
 		tiempo_sin_ver_player += delta
 
 		mover_con_navigation(
-		ultima_posicion_player,
-		obtener_velocidad_alarma(velocidad_persecucion)
+			ultima_posicion_player,
+			obtener_velocidad_alarma(velocidad_persecucion)
 		)
 
 		if tiempo_sin_ver_player >= tiempo_perder_player:
-
 			posicion_sospechosa = ultima_posicion_player
-
 			cambiar_estado(Estado.ALERTA)
 
 
 func cambiar_objetivo():
+
 	indice_objetivo += 1
 
 	if indice_objetivo >= puntos_patrulla.size():
@@ -333,7 +354,9 @@ func reproducir_animacion(dir: Vector2):
 		sprite.play("walk_down")
 		direccion_vision.position = pos_luz_down
 
+
 func obtener_direccion_8(dir: Vector2) -> Vector2:
+
 	var angulo: float = dir.angle()
 	var paso: float = PI / 4.0
 	var angulo_ajustado: float = round(angulo / paso) * paso
@@ -349,11 +372,9 @@ func obtener_direccion_8(dir: Vector2) -> Vector2:
 func actualizar_luz():
 
 	var puntos: PackedVector2Array = PackedVector2Array()
-
 	puntos.append(Vector2.ZERO)
 
 	var espacio: PhysicsDirectSpaceState2D = get_world_2d().direct_space_state
-
 	var mitad_angulo: float = deg_to_rad(angulo_luz / 2.0)
 
 	for i in range(cantidad_rayos + 1):
@@ -367,7 +388,6 @@ func actualizar_luz():
 		)
 
 		var direccion_local: Vector2 = Vector2.RIGHT.rotated(angulo)
-
 		var origen_global: Vector2 = direccion_vision.global_position
 
 		var direccion_global: Vector2 = direccion_local.rotated(
@@ -381,14 +401,13 @@ func actualizar_luz():
 			destino_global
 		)
 
-		# Usa las mismas capas que detecta físicamente el Guardia.
+		# Usa las mismas capas que detecta fisicamente el Guardia
 		query.collision_mask = collision_mask
 
-		# Ignora al propio guardia.
+		# Ignora al propio guardia
 		query.exclude = [get_rid()]
 
 		var resultado: Dictionary = espacio.intersect_ray(query)
-
 		var punto_global: Vector2
 
 		if not resultado.is_empty():
@@ -397,12 +416,13 @@ func actualizar_luz():
 			punto_global = destino_global
 
 		var punto_local: Vector2 = direccion_vision.to_local(punto_global)
-
 		puntos.append(punto_local)
 
 	luz_linterna.polygon = puntos
 
+
 func quitar_llave() -> String:
+
 	if id_llave == "":
 		return ""
 
@@ -413,16 +433,19 @@ func quitar_llave() -> String:
 
 	return llave_robada
 
+
 func mover_con_navigation(objetivo: Vector2, velocidad_movimiento: float):
 
 	navigation_agent.target_position = objetivo
 
 	var siguiente_punto: Vector2 = navigation_agent.get_next_path_position()
 
-	var distancia_siguiente_punto: float = global_position.distance_to(siguiente_punto)
+	var distancia_siguiente_punto: float = global_position.distance_to(
+		siguiente_punto
+	)
 
-	# Si el siguiente punto está prácticamente encima,
-	# no intentamos corregir dirección constantemente.
+	# Si el siguiente punto esta practicamente encima,
+	# no intentamos corregir direccion constantemente
 	if distancia_siguiente_punto < 2.0:
 		velocity = Vector2.ZERO
 		actualizar_luz()
@@ -433,13 +456,11 @@ func mover_con_navigation(objetivo: Vector2, velocidad_movimiento: float):
 	if direccion.length() > 0.0:
 
 		direccion = direccion.normalized()
-
 		velocity = direccion * velocidad_movimiento
 
 		var direccion_visual: Vector2 = obtener_direccion_8(direccion)
 
 		reproducir_animacion(direccion_visual)
-
 		direccion_vision.rotation = direccion_visual.angle()
 
 	else:
@@ -448,6 +469,7 @@ func mover_con_navigation(objetivo: Vector2, velocidad_movimiento: float):
 	actualizar_luz()
 	move_and_slide()
 	comprobar_si_atrapo_player()
+
 
 func puede_ver_player() -> bool:
 
@@ -462,7 +484,7 @@ func puede_ver_player() -> bool:
 	if distancia_player > distancia_luz:
 		return false
 
-	# Dirección hacia donde mira el guardia
+	# Direccion hacia donde mira el guardia
 	var direccion_frente: Vector2 = Vector2.RIGHT.rotated(
 		direccion_vision.global_rotation
 	)
@@ -473,7 +495,7 @@ func puede_ver_player() -> bool:
 		direccion_frente.angle_to(direccion_player)
 	)
 
-	# Fuera del cono de visión
+	# Fuera del cono de vision
 	if angulo_hacia_player > deg_to_rad(angulo_luz / 2.0):
 		return false
 
@@ -487,7 +509,7 @@ func puede_ver_player() -> bool:
 
 	query.exclude = [get_rid()]
 
-	# Debe incluir Player + paredes/obstáculos
+	# Debe incluir Player + paredes/obstaculos
 	query.collision_mask = collision_mask | 1
 
 	var resultado: Dictionary = espacio.intersect_ray(query)
@@ -497,14 +519,16 @@ func puede_ver_player() -> bool:
 
 	return resultado["collider"] == player
 
+
 func _on_alarma_activada():
 	alarma_general = true
+
 
 func obtener_velocidad_alarma(velocidad_base: float) -> float:
 
 	var velocidad_final: float = velocidad_base
 
-	# Multiplicador según la dificultad de la partida
+	# Multiplicador segun la dificultad de la partida
 	velocidad_final *= SaveManager.obtener_multiplicador_velocidad_guardias()
 
 	# Aumento adicional cuando se activa la alarma
@@ -513,7 +537,9 @@ func obtener_velocidad_alarma(velocidad_base: float) -> float:
 
 	return velocidad_final
 
+
 func actualizar_estado_restaurado():
+
 	match estado_actual:
 
 		Estado.PATRULLA:
@@ -525,3 +551,19 @@ func actualizar_estado_restaurado():
 
 		Estado.PERSECUCION:
 			icono_alerta.visible = true
+
+
+# Reinicia la busqueda y vuelve al primer punto de patrulla
+func volver_a_patrulla_tutorial():
+
+	tiempo_busqueda_actual = 0.0
+	tiempo_sin_ver_player = 0.0
+	tiempo_alerta_actual = 0.0
+
+	velocity = Vector2.ZERO
+	indice_objetivo = 0
+	fase_alerta = FaseAlerta.YENDO
+
+	navigation_agent.target_position = global_position
+
+	cambiar_estado(Estado.PATRULLA)

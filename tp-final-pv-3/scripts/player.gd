@@ -12,8 +12,11 @@ signal llaves_actualizadas(cantidad: int)
 
 @onready var sprite: AnimatedSprite2D = $AnimatedSprite2D
 @onready var area_interaccion: Area2D = $AreaInteraccion
+@onready var sonido_pasos: AudioStreamPlayer2D = $SonidoPasos
 var event_input_direction := Vector2.ZERO
 var llaves: Array[String] = []
+
+
 
 func _input(event):
 
@@ -54,6 +57,8 @@ func _physics_process(_delta):
 
 	velocity = dir * velocidad_actual
 	move_and_slide()
+	actualizar_sonido_pasos()
+	actualizar_velocidad_animacion()
 
 
 func obtener_velocidad_actual() -> float:
@@ -175,3 +180,43 @@ func obtener_radio_ruido() -> float:
 		return radio_ruido_correr
 
 	return radio_ruido_normal
+
+
+
+func actualizar_sonido_pasos() -> void:
+	# Si el jugador está quieto, detener el sonido
+	if velocity.length() < 1.0:
+		if sonido_pasos.playing:
+			sonido_pasos.stop()
+		return
+
+
+	# Cambiar el volumen según el movimiento
+	if Input.is_action_pressed("stealth"):
+		sonido_pasos.volume_db = -18.0
+
+	else:
+		sonido_pasos.volume_db = -8.0
+
+	# Reproducir solamente si todavía no está sonando
+	if not sonido_pasos.playing:
+		sonido_pasos.play()
+
+
+func actualizar_velocidad_animacion() -> void:
+	if velocity.length() < 1.0:
+		sprite.speed_scale = 1.0
+		sonido_pasos.pitch_scale = 0.8
+		return
+
+	if Input.is_action_pressed("stealth"):
+		sprite.speed_scale = 0.6
+		sonido_pasos.pitch_scale = 0.6
+
+	elif Input.is_action_pressed("run"):
+		sprite.speed_scale = 1.5
+		sonido_pasos.pitch_scale = 1
+
+	else:
+		sprite.speed_scale = 1.0
+		sonido_pasos.pitch_scale = 0.7

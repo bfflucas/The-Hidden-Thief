@@ -10,6 +10,7 @@
 [ext_resource type="Texture2D" uid="uid://8smjxflsld3e" path="res://sprites/player/caminar_derecha_abajo-Sheet.png" id="7_606se"]
 [ext_resource type="Texture2D" uid="uid://btxrk53nc573q" path="res://sprites/player/caminar_derecha_arriba-Sheet.png" id="8_u1c27"]
 [ext_resource type="Texture2D" uid="uid://dynhicrlf10qc" path="res://sprites/player/caminar_arriba-Sheet.png" id="9_op7ga"]
+[ext_resource type="AudioStream" uid="uid://bu1npriojx8yv" path="res://audio/walk.mp3" id="11_v5ln3"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_n7ghd"]
 
@@ -389,3 +390,8 @@ collision_mask = 10
 [node name="CollisionShape2D" type="CollisionShape2D" parent="AreaInteraccion" unique_id=1443730573]
 position = Vector2(0, -1.4285713)
 shape = SubResource("CapsuleShape2D_nvl01")
+
+[node name="SonidoPasos" type="AudioStreamPlayer2D" parent="." unique_id=1323799317]
+stream = ExtResource("11_v5ln3")
+autoplay = true
+bus = &"SFX"
