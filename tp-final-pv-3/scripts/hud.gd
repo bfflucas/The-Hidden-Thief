@@ -71,7 +71,13 @@ func _on_boton_principal_pressed():
 		GameManager.reiniciar_nivel_actual()
 
 	elif resultado_actual == Resultado.VICTORIA:
-		GameManager.siguiente_nivel()
+		var siguiente: int = GameManager.nivel_actual + 1
+
+		if siguiente < GameManager.niveles.size():
+			GameManager.nivel_actual = siguiente
+			get_tree().change_scene_to_file("res://escenas/niveles/presentacion_nivel.tscn")
+		else:
+			print("¡JUEGO COMPLETADO!")
 
 func _on_boton_menu_pressed():
 	get_tree().paused = false

@@ -45,7 +45,9 @@ func iniciar_nueva_partida(dificultad_elegida: String):
 	SaveManager.dificultad = dificultad_elegida
 	SaveManager.partida_iniciada = true
 	SaveManager.guardar_partida()
-	GameManager.cargar_nivel(0)
+	GameManager.nivel_actual = 0
+	GameManager.reiniciar_estado()
+	get_tree().change_scene_to_file("res://escenas/niveles/presentacion_nivel.tscn")
 
 
 func _on_boton_opciones_pressed() -> void:
