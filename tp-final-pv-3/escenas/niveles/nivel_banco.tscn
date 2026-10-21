@@ -364,7 +364,7 @@ position = Vector2(638, -1293)
 [node name="PuntosPatrulla" type="Node" parent="." unique_id=1890941404]
 
 [node name="Marker2D" type="Marker2D" parent="PuntosPatrulla" unique_id=1936961534]
-position = Vector2(-46, 668)
+position = Vector2(-65, 591)
 
 [node name="Marker2D2" type="Marker2D" parent="PuntosPatrulla" unique_id=1570425213]
 position = Vector2(-106, 130)
@@ -382,10 +382,10 @@ position = Vector2(1175, -886)
 position = Vector2(603, -1051)
 
 [node name="Marker2D9" type="Marker2D" parent="PuntosPatrulla" unique_id=1029734799]
-position = Vector2(726, -705)
+position = Vector2(826, -732)
 
 [node name="Marker2D10" type="Marker2D" parent="PuntosPatrulla" unique_id=1952749888]
-position = Vector2(191, -668)
+position = Vector2(300, -679)
 
 [node name="Guardias" type="Node" parent="." unique_id=1084409889]
 
@@ -462,3 +462,4 @@ light_mask = 12
 navigation_polygon = SubResource("NavigationPolygon_73ics")
 
 [node name="HUD" parent="." unique_id=1147795074 instance=ExtResource("11_4qb26")]
+visible = false
