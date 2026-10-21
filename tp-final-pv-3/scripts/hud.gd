@@ -8,6 +8,7 @@ extends CanvasLayer
 @onready var titulo: Label = $PantallaResultado/Titulo
 @onready var boton_principal: Button = $PantallaResultado/BotonPrincipal
 @onready var boton_guardar: Button = $PantallaResultado/BotonGuardar
+@onready var boton_cargar: Button = $PantallaResultado/BotonCargar
 
 enum Resultado {
 	DERROTA,
@@ -21,6 +22,7 @@ func _ready():
 	tiempo_label.visible = false
 	pantalla_resultado.visible = false
 	boton_guardar.visible = false
+	boton_cargar.hide()
 
 	GameManager.alarma_activada.connect(_on_alarma_activada)
 	GameManager.tiempo_actualizado.connect(_on_tiempo_actualizado)
@@ -59,6 +61,9 @@ func _on_jugador_derrotado():
 
 	pantalla_resultado.visible = true
 	get_tree().paused = true
+	
+	boton_cargar.visible = SaveManager.hay_guardado_manual \
+	and SaveManager.nivel_guardado == GameManager.nivel_actual
 
 func _on_boton_principal_pressed():
 	if resultado_actual == Resultado.PAUSA:
@@ -93,6 +98,7 @@ func _on_nivel_completado():
 
 	pantalla_resultado.visible = true
 	get_tree().paused = true
+	boton_cargar.hide()
 
 
 func _unhandled_input(event):  #funcion de Godot para recibir entradas del teclado/mouse que todavía no fueron consumidas por otro nodo
@@ -114,6 +120,7 @@ func abrir_pausa():
 
 	pantalla_resultado.visible = true
 	get_tree().paused = true
+	boton_cargar.hide()
 
 func cerrar_pausa():
 	pantalla_resultado.visible = false
@@ -150,3 +157,17 @@ func _on_llaves_actualizadas(_cantidad: int):
 		return
 
 	llaves_label.text = "Llaves:\n" + "\n".join(player.llaves)
+
+
+func _on_boton_cargar_pressed() -> void:
+	if not SaveManager.hay_guardado_manual:
+		return
+
+	SaveManager.ignorar_checkpoint = false
+	SaveManager.cargar_partida()
+
+	GameManager.reiniciar_estado()
+	GameManager.nivel_actual = SaveManager.nivel_guardado
+
+	get_tree().paused = false
+	get_tree().change_scene_to_file(GameManager.niveles[GameManager.nivel_actual])

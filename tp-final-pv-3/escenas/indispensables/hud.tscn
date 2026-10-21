@@ -45,11 +45,19 @@ offset_bottom = 182.0
 
 [node name="BotonPrincipal" type="Button" parent="PantallaResultado" unique_id=894844336]
 layout_mode = 0
-offset_left = 473.0
+offset_left = 476.0
 offset_top = 322.0
-offset_right = 653.0
+offset_right = 656.0
 offset_bottom = 372.0
 text = "REINTENTAR"
+
+[node name="BotonCargar" type="Button" parent="PantallaResultado" unique_id=553130000]
+layout_mode = 0
+offset_left = 462.0
+offset_top = 538.0
+offset_right = 687.0
+offset_bottom = 578.0
+text = "CARGAR PARTIDA"
 
 [node name="BotonMenu" type="Button" parent="PantallaResultado" unique_id=67062000]
 layout_mode = 0
@@ -64,12 +72,13 @@ text = "MENU"
 
 [node name="BotonGuardar" type="Button" parent="PantallaResultado" unique_id=787164090]
 layout_mode = 0
-offset_left = 479.0
+offset_left = 451.0
 offset_top = 466.0
-offset_right = 659.0
+offset_right = 692.0
 offset_bottom = 516.0
 text = "GUARDAR PARTIDA"
 
 [connection signal="pressed" from="PantallaResultado/BotonPrincipal" to="." method="_on_boton_principal_pressed"]
+[connection signal="pressed" from="PantallaResultado/BotonCargar" to="." method="_on_boton_cargar_pressed"]
 [connection signal="pressed" from="PantallaResultado/BotonMenu" to="." method="_on_boton_menu_pressed"]
 [connection signal="pressed" from="PantallaResultado/BotonGuardar" to="." method="_on_boton_guardar_pressed"]

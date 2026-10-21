@@ -18,7 +18,7 @@ var nivel_actual: int = 0
 var tiene_tesoro: bool = false
 var alarma_activa: bool = false
 
-var tiempo_escape_maximo: float = 60.0
+var tiempo_escape_maximo: float = 120.0
 var tiempo_restante: float = 0.0
 
 var temporizador_activo: bool = false
@@ -125,9 +125,11 @@ func siguiente_nivel():
 	cargar_nivel(siguiente)
 
 func reiniciar_nivel_actual():
+	SaveManager.ignorar_checkpoint = true
 
 	reiniciar_estado()
 
+	get_tree().paused = false
 	get_tree().reload_current_scene()
 
 func restaurar_alarma(tiempo_guardado: float):

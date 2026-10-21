@@ -6,6 +6,7 @@ extends Node2D
 
 func _ready():
 	if SaveManager.hay_guardado_manual \
+	and not SaveManager.ignorar_checkpoint \
 	and SaveManager.nivel_guardado == GameManager.nivel_actual:
 
 		# RESTAURAR PLAYER

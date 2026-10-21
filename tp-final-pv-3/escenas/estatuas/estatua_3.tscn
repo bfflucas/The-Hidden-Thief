@@ -7,7 +7,6 @@ size = Vector2(23, 27)
 
 [node name="Estatua2" type="StaticBody2D" unique_id=1135806888 groups=["navigation_polygon_source_geometry_group"]]
 z_index = 4
-scale = Vector2(2, 2)
 collision_layer = 8
 collision_mask = 15
 

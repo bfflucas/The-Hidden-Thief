@@ -313,4 +313,74 @@ autoplay = true
 bus = &"Music"
 parameters/looping = true
 
+[node name="PantallaConsejos" type="CanvasLayer" parent="." unique_id=1535414292]
+process_mode = 3
+
+[node name="ColorRect" type="ColorRect" parent="PantallaConsejos" unique_id=75804612]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.0627451, 0.07450981, 0.10980392, 1)
+
+[node name="ContenedorConsejos" type="VBoxContainer" parent="PantallaConsejos/ColorRect" unique_id=1658919075]
+layout_mode = 0
+offset_left = 99.0
+offset_top = 10.0
+offset_right = 1099.0
+offset_bottom = 642.0
+
+[node name="TituloConsejos" type="Label" parent="PantallaConsejos/ColorRect/ContenedorConsejos" unique_id=682973279]
+layout_mode = 2
+text = "CONSEJOS PARA EL LADRÓN"
+
+[node name="TextoConsejos" type="Label" parent="PantallaConsejos/ColorRect/ContenedorConsejos" unique_id=1704239989]
+layout_mode = 2
+text = "Tu objetivo es robar el tesoro y escapar.
+
+MOVIMIENTO
+WASD: Moverse
+SHIFT: Correr
+ESPACIO: Caminar sigilosamente
+E: Interactuar
+P: Menú pausa
+
+GUARDIAS
+Evitá la luz de sus linternas.
+Correr genera ruido y puede alertarlos.
+Observá sus movimientos antes de avanzar.
+Podés estar a su lado en sigilo y no se darán cuenta.
+
+LLAVES Y PUERTAS
+Explorá las habitaciones.
+Algunas llaves están perdidas en el suelo, otras son llevadas
+ por los guardias.
+Usá las llaves para abrir puertas.
+
+EL ROBO
+Cuando robes el tesoro, sonará la alarma.
+¡Escapá antes de que se termine el tiempo!
+
+Podés guardar la partida en todo momento, desde el menú pausa.
+"
+
+[node name="BotonComenzar" type="Button" parent="PantallaConsejos/ColorRect/ContenedorConsejos" unique_id=1423249026]
+custom_minimum_size = Vector2(0, 40)
+layout_mode = 2
+size_flags_horizontal = 4
+text = "COMENZAR TUTORIAL"
+
+[node name="Espaciador" type="Control" parent="PantallaConsejos/ColorRect/ContenedorConsejos" unique_id=611151233]
+custom_minimum_size = Vector2(0, 10)
+layout_mode = 2
+
+[node name="BotonVolver" type="Button" parent="PantallaConsejos/ColorRect/ContenedorConsejos" unique_id=916227032]
+custom_minimum_size = Vector2(0, 40)
+layout_mode = 2
+size_flags_horizontal = 4
+text = "VOLVER AL MENÚ"
+
 [connection signal="pressed" from="CanvasLayer/BotonVolverMenu" to="." method="_on_boton_volver_menu_pressed"]
+[connection signal="pressed" from="PantallaConsejos/ColorRect/ContenedorConsejos/BotonComenzar" to="." method="_on_boton_comenzar_pressed"]
+[connection signal="pressed" from="PantallaConsejos/ColorRect/ContenedorConsejos/BotonVolver" to="." method="_on_boton_volver_pressed"]

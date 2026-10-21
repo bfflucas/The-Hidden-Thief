@@ -9,6 +9,7 @@ var dificultad: String = "normal"
 var partida_iniciada: bool = false
 
 var hay_guardado_manual: bool = false
+var ignorar_checkpoint: bool = false
 var posicion_player: Vector2 = Vector2.ZERO
 var nivel_guardado: int = 0
 var llaves_player: Array[String] = []

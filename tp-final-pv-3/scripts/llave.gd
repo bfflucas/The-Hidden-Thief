@@ -6,7 +6,7 @@ extends Area2D
 var recogida: bool = false
 
 func _ready():
-	if SaveManager.hay_guardado_manual and id_llave in SaveManager.llaves_recogidas:
+	if SaveManager.hay_guardado_manual and not SaveManager.ignorar_checkpoint and id_llave in SaveManager.llaves_recogidas:
 		queue_free()
 		return
 

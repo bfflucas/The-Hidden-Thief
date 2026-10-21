@@ -3,7 +3,7 @@ extends StaticBody2D
 var robado: bool = false
 
 func _ready():
-	if SaveManager.hay_guardado_manual and SaveManager.tesoro_robado:
+	if SaveManager.hay_guardado_manual and not SaveManager.ignorar_checkpoint and SaveManager.tesoro_robado:
 		queue_free()
 
 func robar() -> bool:

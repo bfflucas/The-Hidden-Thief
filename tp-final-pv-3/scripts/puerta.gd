@@ -16,7 +16,7 @@ var abierta: bool = false
 func _ready():
 	var nombre_puerta: String = str(name)
 
-	if SaveManager.hay_guardado_manual and nombre_puerta in SaveManager.puertas_abiertas:
+	if SaveManager.hay_guardado_manual and not SaveManager.ignorar_checkpoint and nombre_puerta in SaveManager.puertas_abiertas:
 		abierta = true
 
 	actualizar_estado()

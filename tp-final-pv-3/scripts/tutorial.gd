@@ -40,6 +40,7 @@ func _ready():
 	actualizar_mensaje_movimiento()
 	guardia.jugador_atrapado_tutorial.connect(_on_jugador_atrapado_tutorial)
 	boton_volver_menu.hide()
+	get_tree().paused = true
 	
 
 func _process(_delta):
@@ -210,3 +211,12 @@ func _on_tutorial_completado() -> void:
 func _on_boton_volver_menu_pressed() -> void:
 	get_tree().paused = false
 	get_tree().change_scene_to_file("res://escenas/niveles/menu_principal.tscn")	
+	
+func _on_boton_comenzar_pressed() -> void:
+	$PantallaConsejos.hide()
+	get_tree().paused = false	
+
+
+func _on_boton_volver_pressed() -> void:
+	get_tree().paused = false
+	get_tree().change_scene_to_file("res://escenas/niveles/menu_principal.tscn")

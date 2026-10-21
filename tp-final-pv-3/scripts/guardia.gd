@@ -36,6 +36,11 @@ var fase_alerta: FaseAlerta = FaseAlerta.YENDO
 @export var distancia_investigacion: float = 8.0
 
 var tiempo_alerta_actual: float = 0.0
+@export var tiempo_maximo_atascado: float = 2.0
+@export var movimiento_minimo: float = 2.0
+
+var tiempo_atascado: float = 0.0
+var posicion_anterior_alerta: Vector2
 
 @onready var sprite: AnimatedSprite2D = $AnimatedSprite2D
 @onready var direccion_vision: Node2D = $DireccionVision
@@ -204,6 +209,9 @@ func cambiar_estado(nuevo_estado: Estado):
 			fase_alerta = FaseAlerta.YENDO
 			navigation_agent.target_position = posicion_sospechosa
 
+			tiempo_atascado = 0.0
+			posicion_anterior_alerta = global_position
+
 		Estado.PERSECUCION:
 			icono_alerta.visible = true
 			AudioManager.reproducir_sfx(
@@ -225,6 +233,25 @@ func estado_alerta(delta):
 
 		FaseAlerta.YENDO:
 			ir_a_investigar()
+
+			if fase_alerta != FaseAlerta.YENDO:
+				tiempo_atascado = 0.0
+				return
+
+			tiempo_atascado += delta
+
+			if tiempo_atascado >= tiempo_maximo_atascado:
+				var desplazamiento: float = global_position.distance_to(posicion_anterior_alerta)
+
+				if desplazamiento < movimiento_minimo:
+					print("GUARDIA ATASCADO: vuelve a patrullar")
+					velocity = Vector2.ZERO
+					navigation_agent.target_position = global_position
+					cambiar_estado(Estado.PATRULLA)
+					return
+
+				tiempo_atascado = 0.0
+				posicion_anterior_alerta = global_position
 
 		FaseAlerta.ESPERANDO:
 			esperar_en_alerta(delta)
