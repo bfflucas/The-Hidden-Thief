@@ -8,7 +8,8 @@ extends Control
 
 func _ready():
 	AudioManager.detener_musica()
-	boton_continuar.visible = SaveManager.existe_partida()
+	#boton_continuar.visible = SaveManager.existe_partida()
+	boton_continuar.disabled = not SaveManager.hay_guardado_manual
 
 func _on_boton_salir_pressed():
 	get_tree().quit()

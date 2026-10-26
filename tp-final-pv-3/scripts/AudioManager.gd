@@ -78,3 +78,14 @@ func reproducir_sfx(ruta: String, volumen_db: float = 0.0):
 	reproductor_sfx.stream = sonido
 	reproductor_sfx.volume_db = volumen_db + volumen_sfx
 	reproductor_sfx.play()
+	
+func reproducir_musica_final():
+	var musica = load("res://audio/musica_final.mp3")
+
+	if musica is AudioStreamMP3:
+		musica.loop = true
+
+	reproductor_musica.stop()
+	reproductor_musica.stream = musica
+	reproductor_musica.volume_db = volumen_musica_normal
+	reproductor_musica.play()

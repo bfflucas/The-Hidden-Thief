@@ -82,7 +82,7 @@ func _on_boton_principal_pressed():
 			GameManager.nivel_actual = siguiente
 			get_tree().change_scene_to_file("res://escenas/niveles/presentacion_nivel.tscn")
 		else:
-			print("¡JUEGO COMPLETADO!")
+			get_tree().change_scene_to_file("res://escenas/niveles/final_juego.tscn")
 
 func _on_boton_menu_pressed():
 	get_tree().paused = false
@@ -90,6 +90,7 @@ func _on_boton_menu_pressed():
 	get_tree().change_scene_to_file("res://escenas/niveles/menu_principal.tscn")
 
 func _on_nivel_completado():
+	AudioManager.detener_musica()
 	boton_guardar.visible = false
 	resultado_actual = Resultado.VICTORIA
 

@@ -338,19 +338,17 @@ text = "CONSEJOS PARA EL LADRÓN"
 [node name="TextoConsejos" type="Label" parent="PantallaConsejos/ColorRect/ContenedorConsejos" unique_id=1704239989]
 layout_mode = 2
 text = "Tu objetivo es robar el tesoro y escapar.
-
-MOVIMIENTO
-WASD: Moverse
-SHIFT: Correr
-ESPACIO: Caminar sigilosamente
-E: Interactuar
-P: Menú pausa
+RECUERDA -----> P: Menú pausa (ALLÍ PODRÁS GUARDAR PARTIDA)
 
 GUARDIAS
 Evitá la luz de sus linternas.
 Correr genera ruido y puede alertarlos.
 Observá sus movimientos antes de avanzar.
-Podés estar a su lado en sigilo y no se darán cuenta.
+Podés estar a su lado en sigilo y no se darán cuenta (un buen 
+ladrón sabe moverse a la par de los guardias).
+Los obstáculos obstruyen la luz de las linternas.
+Si un guardia te detecta, CORRÉ!! Pero ni bien puedas, usa el
+ sigilo para no dar pistas sobre tu posición actual.
 
 LLAVES Y PUERTAS
 Explorá las habitaciones.
@@ -361,8 +359,9 @@ Usá las llaves para abrir puertas.
 EL ROBO
 Cuando robes el tesoro, sonará la alarma.
 ¡Escapá antes de que se termine el tiempo!
-
-Podés guardar la partida en todo momento, desde el menú pausa.
+Los guardias se pondrán nerviosos y más atentos, lo mejor es sólo 
+correr y esquivarlos, para escapar 
+por la ventana de donde entraste.
 "
 
 [node name="BotonComenzar" type="Button" parent="PantallaConsejos/ColorRect/ContenedorConsejos" unique_id=1423249026]

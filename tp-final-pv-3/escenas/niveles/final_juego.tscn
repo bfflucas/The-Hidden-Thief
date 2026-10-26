@@ -1,0 +1,54 @@
+[gd_scene format=3 uid="uid://kv7tc8tib7hp"]
+
+[ext_resource type="Script" uid="uid://usjabwayp7jj" path="res://escenas/niveles/final_juego.gd" id="1_p0xcj"]
+
+[node name="FinalJuego" type="Control" unique_id=327025804]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+script = ExtResource("1_p0xcj")
+
+[node name="ColorRect" type="ColorRect" parent="." unique_id=1042497379]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 1)
+
+[node name="CenterContainer" type="CenterContainer" parent="." unique_id=970764355]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 241.0
+offset_top = 145.0
+offset_right = 841.0
+offset_bottom = 505.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CenterContainer" unique_id=1709483967]
+layout_mode = 2
+theme_override_constants/separation = 25
+
+[node name="Titulo" type="Label" parent="CenterContainer/VBoxContainer" unique_id=657477159]
+layout_mode = 2
+text = "¡¡FELICITACIONES!!"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Mensaje" type="Label" parent="CenterContainer/VBoxContainer" unique_id=1805849237]
+layout_mode = 2
+text = "¡Te convertiste en un ladrón legendario!"
+horizontal_alignment = 1
+
+[node name="BotonMenu" type="Button" parent="CenterContainer/VBoxContainer" unique_id=2108126251]
+custom_minimum_size = Vector2(350, 40)
+layout_mode = 2
+size_flags_horizontal = 4
+text = "MENÚ PRINCIPAL"
+
+[connection signal="pressed" from="CenterContainer/VBoxContainer/BotonMenu" to="." method="_on_boton_menu_pressed"]
