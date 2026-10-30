@@ -25,6 +25,11 @@ SaveManager="*uid://dm13j2ha24fdo"
 AudioManager="*uid://s7yhebddpfs0"
 HoverGlobal="*uid://dklw406bspr1l"
 
+[display]
+
+window/stretch/mode="canvas_items"
+window/stretch/scale_mode="integer"
+
 [global_group]
 
 navigation_polygon_source_geometry_group=""

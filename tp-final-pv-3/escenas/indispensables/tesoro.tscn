@@ -2,6 +2,12 @@
 
 [ext_resource type="Script" uid="uid://b2dx0mggxuwxs" path="res://scripts/tesoro.gd" id="1_iry1f"]
 [ext_resource type="Texture2D" uid="uid://ne280g3obkap" path="res://sprites/Museo/monalisa-Sheet.png" id="2_7oadf"]
+[ext_resource type="Shader" uid="uid://de4ccxy4tkk48" path="res://escenas/indispensables/tesoro.gdshader" id="2_bx03t"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_37ir8"]
+shader = ExtResource("2_bx03t")
+shader_parameter/intensidad_brillo = 0.350000016625
+shader_parameter/velocidad_brillo = 2.0
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_iry1f"]
 size = Vector2(15.917379, 8.989073)
@@ -14,6 +20,7 @@ collision_mask = 15
 script = ExtResource("1_iry1f")
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=185497873]
+material = SubResource("ShaderMaterial_37ir8")
 scale = Vector2(0.99591494, 1.0553255)
 texture = ExtResource("2_7oadf")
 
